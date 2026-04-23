@@ -2,7 +2,7 @@
   "name": "dy-creative-skill",
   "display_name": "大瑀创意科技营销服务查询",
   "description": "查询大瑀创意科技（DY Creative&Tech）的 AI 营销服务：公司介绍、服务套餐与报价、行业趋势报告、联系方式，支持提交合作线索。覆盖抖音代运营、小红书代运营、AIGC 内容营销、账号矩阵运营等业务。",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "大瑀创意科技",
   "license": "MIT",
   "repository": "https://github.com/ChuluuMGL/dy-creative-skill",
@@ -141,6 +141,58 @@
         "readOnlyHint": false,
         "destructiveHint": false,
         "idempotentHint": false,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "subscribe_reports",
+      "display_name": "订阅趋势报告",
+      "description": "订阅大瑀创意科技的行业趋势报告。新报告发布时，会通过用户选择的渠道（邮件/微信/Webhook）推送通知。用户说"我想订阅"、"有新报告通知我"、"关注趋势"时使用。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "enum": ["email", "wechat", "webhook"],
+            "description": "订阅渠道：email=邮件推送, wechat=微信推送, webhook=webhook回调"
+          },
+          "address": {
+            "type": "string",
+            "description": "订阅地址：邮箱地址 / 微信号 / webhook URL"
+          },
+          "interests": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "感兴趣的话题标签（可选），如 ['短视频', 'AIGC', '抖音运营']"
+          }
+        },
+        "required": ["channel", "address"]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "unsubscribe_reports",
+      "display_name": "取消订阅报告",
+      "description": "取消订阅大瑀创意科技的趋势报告推送。用户说"取消订阅"、"不要推了"时使用。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "订阅时使用的地址"
+          }
+        },
+        "required": ["address"]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": false
       }
     }
