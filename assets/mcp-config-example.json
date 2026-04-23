@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "dy-creative-skill": {
+      "type": "streamable-http",
+      "url": "https://www.dycreative.tech/mcp"
+    }
+  }
+}
