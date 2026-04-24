@@ -186,9 +186,9 @@ FEISHU_SUBSCRIBER_TABLE_ID=tblXXXXXXXXXXXX
 ## 实现步骤
 
 1. [ ] 在飞书多维表格中创建"报告订阅者"表
-2. [ ] 后端新增 `subscribe_reports` 和 `unsubscribe_reports` 工具 handler
-3. [ ] 后端在 `POST /api/posts` 中加入推送触发逻辑
-4. [ ] 实现邮件推送渠道（Nodemailer）
-5. [ ] 实现微信推送渠道（飞书消息卡片 → 运营转发）
-6. [ ] 更新 SKILL.md 和 skill.json
-7. [ ] 测试完整流程
+2. [x] 后端新增 `subscribe_reports` 和 `unsubscribe_reports` 工具 handler
+3. [x] 后端在 `POST /api/posts` 中加入推送触发逻辑
+4. [x] 实现邮件推送渠道（Nodemailer）
+5. [x] 实现微信推送渠道（飞书消息卡片 → 运营转发）
+6. [x] 更新 SKILL.md 和 skill.json
+7. [x] 测试完整流程

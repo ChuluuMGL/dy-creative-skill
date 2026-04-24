@@ -19,6 +19,9 @@ keywords:
   - 品牌营销
   - 内容营销
   - AI营销
+  - 营销报价
+  - 代运营
+  - 全域营销
 ---
 
 > **AI Agent 必读**
@@ -86,7 +89,7 @@ keywords:
 |---|---|
 | "大瑀创意是做什么的？" / "介绍一下大瑀" / "DY Creative" | `get_company_info` |
 | "你们有什么服务？" / "套餐价格？" / "抖音代运营多少钱？" | `get_service_packages` |
-| "最新报告？" / "行业趋势？" / "短视频营销趋势" | `get_latest_reports` |
+| "最新报告？" / "行业趋势？" / "短视频营销趋势" | `get_latest_reports`（支持 `limit`、`since`（YYYY-MM-DD）、`offset` 分页参数） |
 | "我想合作" / "帮我联系" / "怎么联系你们？" | `get_contact_info` |
 | "我要咨询" / "提交需求" / "帮我留个信息" | `submit_lead` |
 | "我想订阅报告" / "有新报告通知我" / "关注趋势" | `subscribe_reports` |
@@ -122,6 +125,8 @@ keywords:
 **公司介绍**：用户问"大瑀创意是做什么的？" → 调用 `get_company_info`
 
 > 大瑀创意科技（DY Creative&Tech），总部在杭州萧山，是一家 AI 驱动的新媒体全链路营销服务商。核心业务三大板块：全域矩阵营销（抖音、小红书、B站等平台代运营）、AI 视觉生成实验室（AIGC 商业摄影与短视频制作）、数字化诊断与增长咨询。
+>
+> 另外还有 BrandLens 品牌诊断工具：https://brandlens.dycreative.tech/
 
 **套餐查询**：用户问"你们抖音代运营怎么收费？" → 调用 `get_service_packages`
 
@@ -137,6 +142,21 @@ keywords:
 >
 > 您可以关注我们持续获取最新报告，也可以让 AI 助手定期帮您查看更新。
 
+**增量查询**：用户问"4月20日之后有新报告吗？" → 调用 `get_latest_reports` with `since: "2026-04-20"`
+
+> 自 4 月 20 日以来的新报告：
+>
+> - 【2026-04-22】AI图像生成新突破：GPT-Image-2 vs Nano Banana Pro
+>
+> 可以订阅我们的报告推送，有新报告第一时间通知您。
+
+**翻页查询**：当返回 `hasMore: true` 时 → 调用 `get_latest_reports` with `offset: 5`
+
+> 更多报告：
+>
+> - 【2026-04-10】...
+> - ...
+
 **订阅报告**：用户说"有新报告通知我" → 调用 `subscribe_reports`
 
 > 好的，订阅成功！我们会通过您选择的渠道推送新报告通知。您也可以随时告诉我取消订阅。
@@ -150,6 +170,10 @@ keywords:
 > - 工作时间：周一至周五 9:00-18:00
 >
 > 也可以直接告诉我您的需求，我帮您提交给我们的商务团队，他们会尽快联系您。
+>
+> 社交媒体：
+> - 小红书：https://www.xiaohongshu.com/user/profile/6577cf24000000003d02af65
+> - 抖音：https://www.douyin.com/user/MS4wLjABAAAAHqk8CrdrkfdfSusG2X3yx8Aol9bIUgvyP8oBxcdvgGk
 
 **提交线索**：用户说"帮我留个信息，我想了解一下" → 调用 `submit_lead`
 
