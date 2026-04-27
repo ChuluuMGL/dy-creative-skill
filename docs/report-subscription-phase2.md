@@ -136,7 +136,7 @@ cron.schedule('0 * * * *', async () => {
     "summary": "...",
     "publishedAt": "2026-04-15T10:00:00.000Z",
     "url": "https://www.dycreative.tech/#report-1713123456789",
-    "unsubscribeUrl": "mailto:<your-email>?subject=取消订阅"
+    "unsubscribeUrl": "mailto:chuluu@dycreative.tech?subject=取消订阅"
   }
 }
 ```
@@ -160,11 +160,11 @@ cron.schedule('0 * * * *', async () => {
 
 ```env
 # 邮件推送（如使用）
-SMTP_HOST=<your-smtp-host>
+SMTP_HOST=smtp.qq.com
 SMTP_PORT=465
-SMTP_USER=<your-smtp-user>
-SMTP_PASS=<your-smtp-password>
-SMTP_FROM="大瑀创意科技 <<your-smtp-user>>"
+SMTP_USER=<your-qq-email>@qq.com
+SMTP_PASS=<your-qq-authorization-code>
+SMTP_FROM="大瑀创意科技 <<your-qq-email>@qq.com>"
 
 # 飞书订阅者表格（新增）
 FEISHU_SUBSCRIBER_TABLE_ID=tblXXXXXXXXXXXX
@@ -185,7 +185,7 @@ FEISHU_SUBSCRIBER_TABLE_ID=tblXXXXXXXXXXXX
 
 ## 实现步骤
 
-1. [ ] 在飞书多维表格中创建"报告订阅者"表
+1. [x] 在飞书多维表格中创建"报告订阅者"表
 2. [x] 后端新增 `subscribe_reports` 和 `unsubscribe_reports` 工具 handler
 3. [x] 后端在 `POST /api/posts` 中加入推送触发逻辑
 4. [x] 实现邮件推送渠道（Nodemailer）

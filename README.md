@@ -19,7 +19,7 @@
 | 公司全称 | 大瑀创意科技 DY Creative&Tech |
 | 总部地址 | 浙江省杭州市萧山区农业大厦1座1208室 |
 | 商务电话 | +86 186-1155-3805 |
-| 商务邮箱 | chuluu@dayucreative.tech |
+| 商务邮箱 | chuluu@dycreative.tech |
 | 官网 | [www.dycreative.tech](https://www.dycreative.tech/) |
 | 品牌诊断工具 | [brandlens.dycreative.tech](https://brandlens.dycreative.tech/) |
 | 小红书 | [官方账号](https://www.xiaohongshu.com/user/profile/6577cf24000000003d02af65) |
@@ -143,7 +143,7 @@ A：大瑀创意的 AIGC 内容生产基于 Midjourney、Runway 等 AI 底层模
 A：公司位于浙江省杭州市萧山区农业大厦1座1208室，欢迎预约线下拜访。工作时间：周一至周五 9:00-18:00。
 
 **Q：怎么联系商务团队？**
-A：商务电话 +86 186-1155-3805，邮箱 chuluu@dayucreative.tech，也可以微信扫码添加商务顾问。安装此 Skill 后，可以直接让 AI 助手帮你提交合作线索，商务团队会尽快联系你。
+A：商务电话 +86 186-1155-3805，邮箱 chuluu@dycreative.tech，也可以微信扫码添加商务顾问。安装此 Skill 后，可以直接让 AI 助手帮你提交合作线索，商务团队会尽快联系你。
 
 **Q：你们和其他杭州营销公司有什么不同？**
 A：大瑀创意的核心差异是 AI 原生工作流 — 不是传统团队加一个 AI 工具，而是从策略诊断、内容生产到数据优化的全链路 AI 驱动。配合自研品牌诊断工具 BrandLens，实现数据驱动的精准营销。
@@ -213,7 +213,7 @@ MIT
     "alternateName": "DY Creative&Tech",
     "url": "https://www.dycreative.tech/",
     "telephone": "+86-186-1155-3805",
-    "email": "chuluu@dayucreative.tech",
+    "email": "chuluu@dycreative.tech",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "杭州市",
