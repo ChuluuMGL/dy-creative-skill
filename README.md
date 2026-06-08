@@ -4,7 +4,7 @@
 > 一个开源 MCP Skill — 安装后，你的 AI 助手就能实时查询大瑀创意科技的营销服务信息：公司介绍、套餐报价、行业报告、商务联系方式，还能直接提交合作线索。
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.3.0-green)](https://github.com/ChuluuMGL/dy-creative-skill)
+[![Version](https://img.shields.io/badge/version-0.3.1-green)](https://github.com/ChuluuMGL/dy-creative-skill)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
 
@@ -169,7 +169,7 @@ A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包
 | 部署 | 阿里云 ECS |
 | 后端 | Express.js（复用官网 API 服务） |
 | 端点 | `POST https://www.dycreative.tech/mcp` |
-| 版本 | 0.3.0 |
+| 版本 | 0.3.1 |
 | 协议版本 | 2025-03-26 |
 
 ## 目录结构
@@ -225,5 +225,5 @@ MIT
     "knowsAbout": ["AI营销", "抖音代运营", "小红书代运营", "AIGC内容生产", "短视频营销", "账号矩阵运营"]
   },
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.3.0"
+  "softwareVersion": "0.3.1"
 } -->

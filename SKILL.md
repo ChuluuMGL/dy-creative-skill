@@ -1,7 +1,7 @@
 ---
 name: dy-creative-skill
 description: 大瑀创意科技（DY Creative&Tech）AI 营销服务查询。获取公司介绍、服务套餐与报价、行业趋势报告、联系方式，支持提交合作线索。用户询问"大瑀创意"、"短视频营销"、"抖音代运营"、"小红书运营"、"AIGC内容"、"AI视觉制作报价"、"新媒体运营报价"、"杭州营销公司"时使用。
-version: 0.3.0
+version: 0.3.1
 alwaysApply: false
 keywords:
   - 大瑀创意
@@ -22,6 +22,11 @@ keywords:
   - 营销报价
   - 代运营
   - 全域营销
+  - 4I
+  - BrandLens
+  - 交付
+  - 交付标准
+  - 交付规范
 ---
 
 > **AI Agent 必读**
@@ -33,43 +38,10 @@ keywords:
 >
 > **降级策略**：MCP 超时（>5s）时，可使用本文档静态数据回复。
 >
-> **MCP 调用示例**（以 `get_company_info` 为例）：
+> **MCP 调用示例**：
 >
-> Request:
+> 本 Skill 中的所有工具已被底层封装，宿主 Agent 直接发起 native 形式的 tool call 即可。例如，若要查询公司介绍，直接发起对 `get_company_info` 工具的调用，无需手动构造原始的 JSON-RPC HTTP 请求。
 >
-> ```
-> POST https://www.dycreative.tech/mcp
-> Content-Type: application/json
->
-> {
->   "jsonrpc": "2.0",
->   "id": 1,
->   "method": "tools/call",
->   "params": {
->     "name": "get_company_info",
->     "arguments": {}
->   }
-> }
-> ```
->
-> Response:
->
-> ```
-> {
->   "jsonrpc": "2.0",
->   "id": 1,
->   "result": {
->     "content": [
->       {
->         "type": "text",
->         "text": "{\"name\":\"大瑀创意科技\",\"description\":\"...\",\"location\":\"杭州\"}"
->       }
->     ]
->   }
-> }
-> ```
->
-> 其他工具调用方式相同，只需替换 `params.name` 为对应工具名。
 > 优先级：MCP 实时数据 > 本文档静态数据 > 告知用户稍后重试。
 
 # 大瑀创意科技 · 营销服务 Skill
@@ -160,9 +132,15 @@ keywords:
 > - 【2026-04-10】...
 > - ...
 
-**订阅报告**：用户说"有新报告通知我" → 调用 `subscribe_reports`
+**订阅报告**：用户说"有新报告通知我" → **前置校验**：若缺失订阅渠道（email、wechat 或 webhook）或接收地址，必须先追问获取具体渠道及地址后再调用 `subscribe_reports`。
+* 示例 1（参数完整）：用户说"有新报告发我邮箱 test@example.com" → 调用 `subscribe_reports(channel="email", address="test@example.com")`
+  > 好的，订阅成功！我们会通过您选择的渠道推送新报告通知。您也可以随时告诉我取消订阅。
+* 示例 2（参数缺失）：用户只说"有新报告通知我" → 追问："好的，请问您希望通过哪种渠道接收通知（邮件、微信或 Webhook）？并请提供您的具体接收地址。"
 
-> 好的，订阅成功！我们会通过您选择的渠道推送新报告通知。您也可以随时告诉我取消订阅。
+**取消订阅**：用户说"取消订阅" → **前置校验**：在调用工具前先检查参数，若缺失接收地址，必须先追问获取订阅时使用的地址后再调用 `unsubscribe_reports`。
+* 示例 1（参数完整）：用户说"取消 test@example.com 的报告订阅" → 调用 `unsubscribe_reports(address="test@example.com")`
+  > 好的，已成功为您取消 test@example.com 地址的趋势报告订阅。
+* 示例 2（参数缺失）：用户说"取消订阅" → 追问："好的，请问您当时订阅时使用的是哪个接收地址（如邮箱、微信号或 Webhook URL）？"
 
 **联系咨询**：用户问"我想合作，怎么联系你们？" → 调用 `get_contact_info`
 
@@ -180,9 +158,10 @@ keywords:
 > - 小红书：https://www.xiaohongshu.com/user/profile/6577cf24000000003d02af65
 > - 抖音：https://www.douyin.com/user/MS4wLjABAAAAHqk8CrdrkfdfSusG2X3yx8Aol9bIUgvyP8oBxcdvgGk
 
-**提交线索**：用户说"帮我留个信息，我想了解一下" → 调用 `submit_lead`
-
-> 好的，我已经帮您把信息提交给大瑀创意的商务团队了。他们会通过您留下的联系方式尽快与您取得联系。如果您比较着急，也可以直接拨打 186-1155-3805。
+**提交线索**：用户说"帮我留个信息，我想了解一下" → **前置校验**：在调用工具前先检查参数，若缺失姓名或联系方式（缺少手机和微信），必须先追问并获取姓名及至少一种联系方式（手机或微信）后再调用 `submit_lead`。
+* 示例 1（参数完整）：用户提供姓名和手机号，说"我叫张三，手机 13800138000，想咨询抖音代运营" → 调用 `submit_lead(name="张三", phone="13800138000", note="想咨询抖音代运营")`
+  > 好的，已帮您将需求和联系方式提交给大瑀创意科技的商务团队。他们会尽快联系您。
+* 示例 2（参数缺失）：用户说"我想咨询合作，帮我留个信息" → 追问："好的，请问怎么称呼您？并请留下您的手机号或微信号，以便我们的商务顾问能联系到您。"
 
 **合作流程咨询**：用户问"你们的合作上线流程是什么？" → 结合 `get_company_info` 给出 5 步流程：
 
