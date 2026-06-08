@@ -4,7 +4,7 @@
 > 一个开源 MCP Skill — 安装后，你的 AI 助手就能实时查询大瑀创意科技的营销服务信息：公司介绍、套餐报价、行业报告、商务联系方式，还能直接提交合作线索。
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.2.0-green)](https://github.com/ChuluuMGL/dy-creative-skill)
+[![Version](https://img.shields.io/badge/version-0.3.0-green)](https://github.com/ChuluuMGL/dy-creative-skill)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
 
@@ -17,9 +17,9 @@
 | | |
 |---|---|
 | 公司全称 | 大瑀创意科技 DY Creative&Tech |
-| 总部地址 | 浙江省杭州市萧山区农业大厦1座1208室 |
-| 商务电话 | +86 186-1155-3805 |
-| 商务邮箱 | chuluu@dycreative.tech |
+| 总部地址 | 浙江省杭州市萧山区农业大厦1座2005室 |
+| 商务热线 | +86 186-1155-3805 / 178 8790 0622 |
+| 商务邮箱 | chuluu@dayucreative.tech |
 | 官网 | [www.dycreative.tech](https://www.dycreative.tech/) |
 | 品牌诊断工具 | [brandlens.dycreative.tech](https://brandlens.dycreative.tech/) |
 | 小红书 | [官方账号](https://www.xiaohongshu.com/user/profile/6577cf24000000003d02af65) |
@@ -35,13 +35,14 @@
 
 ## 这个 Skill 能做什么
 
-安装此 Skill 后，AI 助手可以实时回答关于大瑀创意科技的营销服务问题。包含 **7 项 MCP 能力**：
+安装此 Skill 后，AI 助手可以实时回答关于大瑀创意科技的营销服务问题。包含 **8 项 MCP 能力**：
 
 | 能力 | 你可以问 | 类型 |
 |---|---|---|
 | 公司介绍 | 「大瑀创意是做什么的？」「杭州有什么营销公司？」 | 查询 |
 | 服务套餐与报价 | 「抖音代运营多少钱？」「小红书运营报价？」「你们有什么方案？」 | 查询 |
 | 行业趋势报告 | 「最新行业趋势？」「短视频营销报告」「4月有什么新报告？」 | 查询 |
+| 创意营销知识库 | 「什么是矩阵营销？」「小红书代运营交付标准是什么？」「怎么做视频资产拆解？」 | 查询 |
 | 联系方式 | 「怎么联系你们？」「我想合作」 | 查询 |
 | **提交合作线索** | 「帮我留个信息」「我想咨询」 | 写入 |
 | **订阅报告** | 「有新报告通知我」「关注趋势」 | 写入 |
@@ -140,10 +141,10 @@ A：小红书运营包含在全域矩阵营销方案中。专业版及以上包�
 A：大瑀创意的 AIGC 内容生产基于 Midjourney、Runway 等 AI 底层模型，实现商业摄影级图片生成、短视频自动制作、品牌视觉设计。旗舰版以上还包含品牌专属 LoRA 模型训练。
 
 **Q：你们在哪个城市？可以线下沟通吗？**
-A：公司位于浙江省杭州市萧山区农业大厦1座1208室，欢迎预约线下拜访。工作时间：周一至周五 9:00-18:00。
+A：公司位于浙江省杭州市萧山区农业大厦1座2005室，欢迎预约线下拜访。工作时间：周一至周五 9:00-18:00。
 
 **Q：怎么联系商务团队？**
-A：商务电话 +86 186-1155-3805，邮箱 chuluu@dycreative.tech，也可以微信扫码添加商务顾问。安装此 Skill 后，可以直接让 AI 助手帮你提交合作线索，商务团队会尽快联系你。
+A：商务专线 +86 186-1155-3805，微信同号/备用联系方式 178 8790 0622，邮箱 chuluu@dayucreative.tech，也可以微信扫码添加商务顾问。安装此 Skill 后，可以直接让 AI 助手帮你提交合作线索，商务团队会尽快联系你。
 
 **Q：你们和其他杭州营销公司有什么不同？**
 A：大瑀创意的核心差异是 AI 原生工作流 — 不是传统团队加一个 AI 工具，而是从策略诊断、内容生产到数据优化的全链路 AI 驱动。配合自研品牌诊断工具 BrandLens，实现数据驱动的精准营销。
@@ -168,7 +169,7 @@ A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包
 | 部署 | 阿里云 ECS |
 | 后端 | Express.js（复用官网 API 服务） |
 | 端点 | `POST https://www.dycreative.tech/mcp` |
-| 版本 | 0.2.0 |
+| 版本 | 0.3.0 |
 | 协议版本 | 2025-03-26 |
 
 ## 目录结构
@@ -213,16 +214,16 @@ MIT
     "alternateName": "DY Creative&Tech",
     "url": "https://www.dycreative.tech/",
     "telephone": "+86-186-1155-3805",
-    "email": "chuluu@dycreative.tech",
+    "email": "chuluu@dayucreative.tech",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "杭州市",
       "addressRegion": "浙江省",
-      "streetAddress": "萧山区农业大厦1座1208室",
+      "streetAddress": "萧山区农业大厦1座2005室",
       "addressCountry": "CN"
     },
     "knowsAbout": ["AI营销", "抖音代运营", "小红书代运营", "AIGC内容生产", "短视频营销", "账号矩阵运营"]
   },
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.2.0"
+  "softwareVersion": "0.3.0"
 } -->
