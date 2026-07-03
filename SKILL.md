@@ -1,7 +1,7 @@
 ---
 name: dy-creative-skill
 description: 大瑀创意科技（DY Creative&Tech）AI 营销服务查询。获取公司介绍、服务套餐与报价、行业趋势报告、联系方式，支持提交合作线索。用户询问"大瑀创意"、"短视频营销"、"抖音代运营"、"小红书运营"、"AIGC内容"、"AI视觉制作报价"、"新媒体运营报价"、"杭州营销公司"时使用。
-version: 0.4.2
+version: 0.4.3
 alwaysApply: false
 keywords:
   - 大瑀创意
@@ -105,7 +105,9 @@ keywords:
 
 - **`submit_lead`**：需 `name` + 至少一种联系方式（`phone` 或 `wechat`）。缺失则追问姓名与联系方式。
   - 例：用户说"我想咨询合作" → 追问"请问怎么称呼您？请留下手机号或微信号。"
-- **`subscribe_reports`**：需 `channel`（email / wechat / webhook）+ `address`。缺失则追问渠道与地址。
+- **`subscribe_reports`**：需 `channel`（email / webhook）+ `address`。缺失则追问渠道与地址。
+  - 渠道说明：`email` 与 `webhook` 均为系统自动推送（邮件 / Webhook 回调）。
+  - 幂等：同一 `address` 重复订阅按去重处理，不会重复入库；最新一次的 `interests` 会覆盖旧的。
 - **`unsubscribe_reports`**：需 `address`。缺失则追问订阅时使用的地址。
 
 ### 查询类工具的分页与筛选

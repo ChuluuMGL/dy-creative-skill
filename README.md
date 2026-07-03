@@ -8,7 +8,7 @@
 **中文** | [English](README.en.md)
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.4.2-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.3-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
 [![Drift Check](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml/badge.svg)](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)
@@ -59,7 +59,9 @@
 
 ## 实时效果演示
 
-以下都是**真实调用 MCP 端点的返回**（非编造示例），你可以装好后自己复现：
+以下都是**真实调用 MCP 端点的返回**（非编造示例），你可以装好后自己复现。
+
+> 注：报告与知识库内容持续滚动更新，下列标题为 **2026-04 采集的示例**，实际以 MCP 实时返回为准；套餐价格是 CI 每日校验的稳定参考值。
 
 **① 公司介绍** — 调用 `get_company_info`
 > 大瑀创意科技（DY Creative&Tech），位于杭州萧山的 **AI 短视频制作与 AIGC 内容生产服务商**，专注把企业资料转成可发布、可复用的短视频、脚本、封面标题、账号内容规划和内容资产矩阵。
@@ -195,6 +197,16 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
 | 旗舰版 | ¥128,000 起 | 抖音+小红书+B站+视频号+公众号 | 头部品牌全域护城河 |
 | 定制版 | 面议 | 全平台 + 定制化 | 集团/大型企业 |
 
+### AI 视觉服务报价单（单条/单套计价，参考价）
+
+> 同样以 `get_service_packages` 实时返回为准；以下为各档交付明细。起步价由 [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml) 每日校验。
+
+| 产品 | 参考价 | 适用场景 | 画质 | 包含交付 |
+|---|---|---|---|---|
+| AI 营销短视频 | ¥2,980 起/条 | 抖音 / 小红书 / 视频号 / 官网日常内容 | 1080P / 4K | 按产品卖点 AI 生成创意分镜 · AI 模特/场景生成（免模特及场地费）· AI 动效与特效包装 · 免费 1 次合理微调 |
+| AI 电商主图视频 | ¥5,800 起/套（含 15s + 30s） | 天猫 / 京东 / 独立站详情页 | 4K 超高清 | 高精度 3D 渲染质感 · 动态光影与产品 360° 核心痛点演示 · 赠 5 张高保真 AI 商用场景主图 |
+| AI TVC 级定制视频 | ¥19,800 起/条 | 品牌全渠道品宣 / 展会大屏 / 线下门店巡播 | 4K / 8K 电影级 | 好莱坞级 AI 模型深度训练与生成 · 顶尖电影质感与专属 AI 商业级配音配乐 · 无限脑洞场景（太空/深海/异次元等）· 资深视效总监全程操刀 |
+
 ---
 
 ## 数据与隐私
@@ -202,7 +214,7 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
 本 Skill 通过远程 MCP 端点提供实时数据。使用写入类工具（`submit_lead` / `subscribe_reports` / `unsubscribe_reports`）时，请注意：
 
 - **留资信息（submit_lead）**：你提交的姓名、电话/微信、公司、需求备注会实时推送到大瑀创意科技商务团队（飞书 + CRM），仅用于商务跟进联系，不会出售给第三方。
-- **报告订阅（subscribe_reports）**：你提供的邮箱/微信号/Webhook 地址仅用于推送新报告通知；可随时通过 `unsubscribe_reports` 取消并停止推送。
+- **报告订阅（subscribe_reports）**：你提供的邮箱地址或 Webhook URL 仅用于推送新报告通知；可随时通过 `unsubscribe_reports` 取消并停止推送。
 - **查询类工具**（公司介绍、套餐、报告、知识库、联系方式）不涉及你的个人信息留存。
 - **数据存储与删除**：留资与订阅数据存储于大瑀创意科技自有服务器（阿里云 ECS，中国境内）。如需查看或删除你提交的信息，请联系 chuluu@dayucreative.tech。
 - 本 Skill 代码（仓库内文件）采用 MIT 协议开源；远程 MCP 服务端不在本仓库范围内。
@@ -249,10 +261,10 @@ A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包
 | 部署 | 阿里云 ECS |
 | 后端 | Express.js（复用官网 API 服务） |
 | 端点 | `POST https://www.dycreative.tech/mcp` |
-| 版本 | 0.4.2 |
+| 版本 | 0.4.3 |
 | 协议版本 | 2025-03-26 |
 | 工具数 | 8（5 查询 + 3 写入） |
-| 契约校验 | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)（每日对比 server 工具名 + 价格） |
+| 契约校验 | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)（每日校验：工具名 + 价格 + 联系方式 + 版本号一致性） |
 
 ## 目录结构
 
@@ -262,6 +274,7 @@ dy-creative-skill/
 ├── skill.json               # 机器可读配置（MCP 端点、工具定义、品牌调性、兼容性）
 ├── README.md                # 中文说明（本文件）
 ├── README.en.md             # English README
+├── CHANGELOG.md             # 版本变更记录
 ├── LICENSE
 ├── social_preview.png       # GitHub social preview / hero
 ├── agents/
@@ -322,7 +335,7 @@ MIT — 本仓库内的 Skill 定义文件（SKILL.md / skill.json / 配置示�
     "knowsAbout": ["AI营销", "抖音代运营", "小红书代运营", "AIGC内容生产", "短视频营销", "账号矩阵运营"]
   },
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.4.2"
+  "softwareVersion": "0.4.3"
 } -->
 
 <!-- Structured Data for SEO: FAQPage -->
