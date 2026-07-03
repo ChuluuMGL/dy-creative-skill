@@ -246,11 +246,9 @@ dy-creative-skill/
 │   └── check_mcp_drift.py   # skill.json vs server drift + price spot-check
 ├── assets/
 │   └── mcp-config-example.json   # MCP client config example
-├── .github/
-│   ├── workflows/mcp-drift-check.yml   # daily + on-change
-│   └── ISSUE_TEMPLATE/                 # issue templates (docs bug / partnership)
-└── docs/
-    └── report-subscription-phase2.md   # internal iteration notes
+└── .github/
+    ├── workflows/mcp-drift-check.yml   # daily + on-change
+    └── ISSUE_TEMPLATE/                 # issue templates (docs bug / partnership)
 ```
 
 ## Related Skills
