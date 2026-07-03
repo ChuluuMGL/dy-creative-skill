@@ -49,6 +49,16 @@ EXPECTED_PRICES = {
     "旗舰版": 128000,
 }
 
+# AI vision (short-video) package floors — same drift risk as the content
+# packages above. Names must match the server's aiVisionPackages[].name.
+# KEEP IN SYNC with the "AI 视觉服务报价单 / AI Vision Services Price Sheet"
+# table in README.md / README.en.md.
+EXPECTED_VISION_PRICES = {
+    "AI 营销短视频": 2980,
+    "AI 电商主图视频": 5800,
+    "AI TVC 级定制视频": 19800,
+}
+
 # Canonical contact values — the single source of truth. Both the live server
 # (get_contact_info) AND the hardcoded contact strings in the READMEs must match.
 # Catches drift in either direction: a server-side change OR a README edit.
@@ -129,37 +139,47 @@ def call_tool(name, arguments=None):
         return None, "non-JSON response"
 
 
-def check_prices():
-    """Spot-check that server package floors match the README reference prices."""
-    errors, warnings = [], []
-    payload, err = call_tool("get_service_packages")
-    if err is not None:
-        warnings.append(f"  ⚠ price spot-check skipped: get_service_packages unusable ({err})")
-        return errors, warnings
-    packages = payload.get("contentPackages") or payload.get("packages") or []
-    if not packages:
-        warnings.append("  ⚠ price spot-check skipped: no contentPackages in server response")
-        return errors, warnings
+def _check_pkg_floors(packages, expected, label, errors, warnings):
+    """Compare a server package list's floors against an expected {name: floor} dict."""
     by_name = {}
     for pk in packages:
         nm = pk.get("name") or pk.get("planName")
         if nm:
             by_name[nm] = pk.get("price") or pk.get("monthlyFee") or ""
-    for plan, expected in EXPECTED_PRICES.items():
+    for plan, expected_floor in expected.items():
         actual_str = by_name.get(plan)
         if actual_str is None:
-            warnings.append(f"  ⚠ price spot-check: plan '{plan}' not found in server packages")
+            warnings.append(f"  ⚠ {label} price spot-check: '{plan}' not found in server packages")
             continue
         nums = re.findall(r"\d[\d,]*", str(actual_str))
         if not nums:
-            warnings.append(f"  ⚠ price spot-check: could not parse number from '{plan}' price '{actual_str}'")
+            warnings.append(f"  ⚠ {label} price spot-check: could not parse number from '{plan}' price '{actual_str}'")
             continue
         actual = int(nums[0].replace(",", ""))
-        if actual != expected:
+        if actual != expected_floor:
             errors.append(
-                f"  ✗ price drift: '{plan}' server floor ¥{actual:,} ≠ documented ¥{expected:,} "
-                f"(update README reference price AND EXPECTED_PRICES here)"
+                f"  ✗ {label} price drift: '{plan}' server floor ¥{actual:,} ≠ documented ¥{expected_floor:,} "
+                f"(update README reference price AND the EXPECTED_*_PRICES constant here)"
             )
+
+
+def check_prices():
+    """Spot-check content + AI-vision package floors against the README reference prices."""
+    errors, warnings = [], []
+    payload, err = call_tool("get_service_packages")
+    if err is not None:
+        warnings.append(f"  ⚠ price spot-check skipped: get_service_packages unusable ({err})")
+        return errors, warnings
+    content = payload.get("contentPackages") or payload.get("packages") or []
+    vision = payload.get("aiVisionPackages") or []
+    if content:
+        _check_pkg_floors(content, EXPECTED_PRICES, "content", errors, warnings)
+    else:
+        warnings.append("  ⚠ content price spot-check skipped: no contentPackages in server response")
+    if vision:
+        _check_pkg_floors(vision, EXPECTED_VISION_PRICES, "vision", errors, warnings)
+    else:
+        warnings.append("  ⚠ vision price spot-check skipped: no aiVisionPackages in server response")
     return errors, warnings
 
 
@@ -226,16 +246,17 @@ def check_versions():
 
 
 def check_readme_prices():
-    """Both READMEs must display the EXPECTED_PRICES floors (formatted ¥N,NNN)."""
+    """Both READMEs must display the content + vision reference floors (¥N,NNN)."""
     errors = []
-    for plan, val in EXPECTED_PRICES.items():
-        formatted = f"¥{val:,}"  # e.g. ¥19,800
-        for path in README_FILES:
-            if formatted not in read(path):
-                errors.append(
-                    f"  ✗ README price drift: {path} missing reference floor '{formatted}' for '{plan}' "
-                    f"(update the README table or EXPECTED_PRICES here)"
-                )
+    for label, expected in [("content", EXPECTED_PRICES), ("vision", EXPECTED_VISION_PRICES)]:
+        for plan, val in expected.items():
+            formatted = f"¥{val:,}"  # e.g. ¥19,800
+            for path in README_FILES:
+                if formatted not in read(path):
+                    errors.append(
+                        f"  ✗ README {label} price drift: {path} missing reference floor '{formatted}' for '{plan}' "
+                        f"(update the README table or the EXPECTED_*_PRICES constant here)"
+                    )
     return errors, []
 
 

@@ -10,7 +10,7 @@ the version string is consistent across `SKILL.md`, `skill.json`, and both READM
 - **drift-check extended** (`scripts/check_mcp_drift.py`): now also verifies
   - **contact info** (`get_contact_info`) — phone/email/address match the live server AND the READMEs (catches server-side change or a README edit);
   - **version consistency** — `skill.json` version equals the `SKILL.md` frontmatter, both README badges, and both JSON-LD `softwareVersion` values (prevents the manual 4-place version-sync misses);
-  - **README reference prices** — both READMEs still show the `¥19,800 / ¥58,000 / ¥128,000` floors (closes the manual CN↔EN sync gap).
+  - **README reference prices** — content floors (`¥19,800 / ¥58,000 / ¥128,000`) AND AI-vision floors (`¥2,980 / ¥5,800 / ¥19,800`) are verified on the server and present in both READMEs (closes the manual CN↔EN sync gap; AI-vision pricing was previously unprotected).
 
 ### Tooling contracts
 - **`agents/openai.yaml`** fully populated — MCP endpoint + protocol version + 8-tool inventory + guardrails, so Codex/OpenAI consumers get the complete contract (was display-name + prompt only).
@@ -18,7 +18,7 @@ the version string is consistent across `SKILL.md`, `skill.json`, and both READM
 - **`get_latest_knowledge`** description now lists all **8 real categories** (was 4), matching `SKILL.md`.
 
 ### Docs
-- README (CN + EN): added an **AI Vision services** table (AI marketing short video ¥2,980+, e-commerce main-image video ¥5,800+, TVC-grade custom ¥19,800+) — previously only the 4 content packages were shown.
+- README (CN + EN): added a full **AI Vision price sheet** (报价单) with per-tier deliverables — AI marketing short video ¥2,980+, e-commerce main-image video ¥5,800+, TVC-grade custom ¥19,800+ — previously only the 4 content packages were shown.
 - README (CN + EN): the **Live Demo** section now flags that report/knowledge titles were captured 2026-04 and roll over time (package prices are CI-verified stable).
 - Added this **CHANGELOG.md**.
 

@@ -183,15 +183,15 @@ My name is Zhang San, phone +86 138xxxx, and I'd like to consult on Douyin opera
 | Flagship | from ¥128,000 | Douyin + Xiaohongshu + Bilibili + Video Account + Official Account | Top brands building a full moat |
 | Custom | on request | All platforms + customization | Groups / large enterprises |
 
-### AI Vision Services (priced per item, reference)
+### AI Vision Services Price Sheet (priced per item, reference)
 
-> Live values via `get_service_packages`.
+> Live values via `get_service_packages`; below are the per-tier deliverables. Reference floors are verified daily by the [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml).
 
-| Product | Reference price | Best for | Quality |
-|---|---|---|---|
-| AI marketing short video | from ¥2,980 / clip | Douyin / RED / Video Account / website daily content | 1080P / 4K |
-| AI e-commerce main-image video | from ¥5,800 / set (15s + 30s) | Tmall / JD / standalone-store detail pages | 4K UHD |
-| AI TVC-grade custom video | from ¥19,800 / clip | Brand campaigns / expo screens / in-store loops | 4K / 8K cinematic |
+| Product | Reference price | Best for | Quality | Included deliverables |
+|---|---|---|---|---|
+| AI marketing short video | from ¥2,980 / clip | Douyin / RED / Video Account / website daily content | 1080P / 4K | AI creative storyboards from product selling points · AI model/scene generation (no model or location fee) · AI motion & VFX · 1 free reasonable tweak |
+| AI e-commerce main-image video | from ¥5,800 / set (15s + 30s) | Tmall / JD / standalone-store detail pages | 4K UHD | High-precision 3D render · dynamic lighting + 360° core pain-point demo · 5 high-fidelity AI commercial main images included |
+| AI TVC-grade custom video | from ¥19,800 / clip | Brand campaigns / expo screens / in-store loops | 4K / 8K cinematic | Hollywood-grade AI model training & generation · cinematic look with exclusive AI voiceover & score · unlimited concept scenes (space / deep sea / etc.) · senior VFX supervisor throughout |
 
 ---
 
