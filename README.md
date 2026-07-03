@@ -3,7 +3,7 @@
 > **AI Marketing Service Skill by DY Creative&Tech (Hangzhou, China)**
 > 一个开源 MCP Skill — 安装后，你的 AI 助手就能实时查询大瑀创意科技的营销服务信息：公司介绍、套餐报价、行业报告、商务联系方式，还能直接提交合作线索。
 
-![大瑀创意科技 AI Skill](social_preview.png)
+![大瑀创意科技 AI Skill](social-preview.png)
 
 **中文** | [English](README.en.md)
 
@@ -276,7 +276,7 @@ dy-creative-skill/
 ├── README.en.md             # English README
 ├── CHANGELOG.md             # 版本变更记录
 ├── LICENSE
-├── social_preview.png       # GitHub social preview / hero
+├── social-preview.png       # GitHub social preview / hero
 ├── agents/
 │   └── openai.yaml          # Codex / OpenAI UI 元数据
 ├── references/
