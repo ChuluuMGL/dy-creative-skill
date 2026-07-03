@@ -1,0 +1,7 @@
+interface:
+  display_name: "大瑀创意科技营销服务查询"
+  short_description: "Query DY Creative&Tech marketing services — packages, reports, knowledge, and lead capture via MCP."
+  default_prompt: "Use $dy-creative-skill to answer questions about 大瑀创意科技 (DY Creative&Tech): company info, service packages and pricing, latest industry reports, marketing knowledge base, and contact details. For partnership intent, collect name + phone/wechat and call submit_lead."
+
+policy:
+  allow_implicit_invocation: true
