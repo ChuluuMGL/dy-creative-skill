@@ -272,11 +272,9 @@ dy-creative-skill/
 │   └── check_mcp_drift.py   # skill.json vs server 漂移 + 价格抽检
 ├── assets/
 │   └── mcp-config-example.json   # MCP 客户端接入示例
-├── .github/
-│   ├── workflows/mcp-drift-check.yml   # 每日 + 改动触发
-│   └── ISSUE_TEMPLATE/                 # issue 模板（文档 bug / 合作咨询）
-└── docs/
-    └── report-subscription-phase2.md   # 订阅功能内部迭代笔记
+└── .github/
+    ├── workflows/mcp-drift-check.yml   # 每日 + 改动触发
+    └── ISSUE_TEMPLATE/                 # issue 模板（文档 bug / 合作咨询）
 ```
 
 ## 相关 Skill
