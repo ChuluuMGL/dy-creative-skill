@@ -1,0 +1,42 @@
+name: MCP Drift Check
+
+# Catches drift between the tool contract in skill.json and the deployed MCP server.
+# The v0.4.0 -> v0.4.1 fix was exactly this class of bug: docs named a tool the
+# server did not expose, silently breaking a headline feature. This check prevents
+# a recurrence from both directions:
+#   - repo-side:  a PR that edits skill.json is validated against the live server
+#   - server-side: the daily cron catches server renames even with no repo activity
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'skill.json'
+      - 'scripts/check_mcp_drift.py'
+      - '.github/workflows/mcp-drift-check.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'skill.json'
+      - 'scripts/check_mcp_drift.py'
+  schedule:
+    # daily ~03:17 UTC (off the :00 mark); catches server-side drift
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  drift-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Compare skill.json tools against live MCP server
+        run: python3 scripts/check_mcp_drift.py
+        env:
+          MCP_URL: https://www.dycreative.tech/mcp
+          SKILL_JSON: skill.json
