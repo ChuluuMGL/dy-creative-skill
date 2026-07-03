@@ -219,18 +219,18 @@
     {
       "name": "subscribe_reports",
       "display_name": "订阅趋势报告",
-      "description": "订阅大瑀创意科技的行业趋势报告。新报告发布时推送通知：email（邮件）与 webhook 为自动推送；wechat 渠道由大瑀运营人员人工转发，非实时直推。按 address 去重——同一地址重复订阅不会重复入库，会以最新一次的 interests 覆盖更新。用户说「我想订阅」、「有新报告通知我」、「关注趋势」时使用。",
+      "description": "订阅大瑀创意科技的行业趋势报告。新报告发布时自动推送通知，支持 email（邮件）与 webhook 两种渠道。按 address 去重——同一地址重复订阅不会重复入库，会以最新一次的 interests 覆盖更新。用户说「我想订阅」、「有新报告通知我」、「关注趋势」时使用。",
       "inputSchema": {
         "type": "object",
         "properties": {
           "channel": {
             "type": "string",
-            "enum": ["email", "wechat", "webhook"],
-            "description": "订阅渠道：email=邮件推送, wechat=微信推送, webhook=webhook回调"
+            "enum": ["email", "webhook"],
+            "description": "订阅渠道：email=邮件自动推送, webhook=webhook回调自动推送"
           },
           "address": {
             "type": "string",
-            "description": "订阅地址：邮箱地址 / 微信号 / webhook URL"
+            "description": "订阅地址：邮箱地址 / webhook URL"
           },
           "interests": {
             "type": "array",

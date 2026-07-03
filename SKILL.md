@@ -105,8 +105,8 @@ keywords:
 
 - **`submit_lead`**：需 `name` + 至少一种联系方式（`phone` 或 `wechat`）。缺失则追问姓名与联系方式。
   - 例：用户说"我想咨询合作" → 追问"请问怎么称呼您？请留下手机号或微信号。"
-- **`subscribe_reports`**：需 `channel`（email / wechat / webhook）+ `address`。缺失则追问渠道与地址。
-  - 渠道说明：`email`、`webhook` 为自动推送；`wechat` 由运营人员**人工转发**（非实时直推），如用户强调时效，优先建议 email。
+- **`subscribe_reports`**：需 `channel`（email / webhook）+ `address`。缺失则追问渠道与地址。
+  - 渠道说明：`email` 与 `webhook` 均为系统自动推送（邮件 / Webhook 回调）。
   - 幂等：同一 `address` 重复订阅按去重处理，不会重复入库；最新一次的 `interests` 会覆盖旧的。
 - **`unsubscribe_reports`**：需 `address`。缺失则追问订阅时使用的地址。
 

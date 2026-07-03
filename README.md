@@ -214,7 +214,7 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
 本 Skill 通过远程 MCP 端点提供实时数据。使用写入类工具（`submit_lead` / `subscribe_reports` / `unsubscribe_reports`）时，请注意：
 
 - **留资信息（submit_lead）**：你提交的姓名、电话/微信、公司、需求备注会实时推送到大瑀创意科技商务团队（飞书 + CRM），仅用于商务跟进联系，不会出售给第三方。
-- **报告订阅（subscribe_reports）**：你提供的邮箱/微信号/Webhook 地址仅用于推送新报告通知；可随时通过 `unsubscribe_reports` 取消并停止推送。
+- **报告订阅（subscribe_reports）**：你提供的邮箱地址或 Webhook URL 仅用于推送新报告通知；可随时通过 `unsubscribe_reports` 取消并停止推送。
 - **查询类工具**（公司介绍、套餐、报告、知识库、联系方式）不涉及你的个人信息留存。
 - **数据存储与删除**：留资与订阅数据存储于大瑀创意科技自有服务器（阿里云 ECS，中国境内）。如需查看或删除你提交的信息，请联系 chuluu@dayucreative.tech。
 - 本 Skill 代码（仓库内文件）采用 MIT 协议开源；远程 MCP 服务端不在本仓库范围内。

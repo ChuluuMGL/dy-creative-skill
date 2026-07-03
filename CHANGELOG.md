@@ -14,7 +14,7 @@ the version string is consistent across `SKILL.md`, `skill.json`, and both READM
 
 ### Tooling contracts
 - **`agents/openai.yaml`** fully populated — MCP endpoint + protocol version + 8-tool inventory + guardrails, so Codex/OpenAI consumers get the complete contract (was display-name + prompt only).
-- **`subscribe_reports`** contract clarified in `skill.json` / `SKILL.md` / `references/usage-examples.md`: `wechat` channel is forwarded manually by operations (not real-time auto-push); subscription is idempotent by `address` and re-subscribe overwrites `interests`.
+- **`subscribe_reports`** narrowed to `email` + `webhook` only (both true auto-push). The `wechat` channel was removed from the skill's advertised channels because the backend only forwards it manually via operations — WeChat users should follow the official account instead, which is outside this tool. Subscription stays idempotent by `address` and re-subscribe overwrites `interests`. The live server still accepts `wechat` for direct callers, but the skill no longer surfaces it.
 - **`get_latest_knowledge`** description now lists all **8 real categories** (was 4), matching `SKILL.md`.
 
 ### Docs

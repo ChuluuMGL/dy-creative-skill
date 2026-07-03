@@ -200,7 +200,7 @@ My name is Zhang San, phone +86 138xxxx, and I'd like to consult on Douyin opera
 This skill uses a remote MCP endpoint for live data. When using write tools (`submit_lead` / `subscribe_reports` / `unsubscribe_reports`), please note:
 
 - **Lead info (submit_lead):** the name, phone/WeChat, company, and notes you submit are pushed in real time to DY Creative's sales team (Feishu + CRM) for follow-up only — never sold to third parties.
-- **Report subscription (subscribe_reports):** your email/WeChat/Webhook address is used only to push new-report notifications; cancel anytime via `unsubscribe_reports`.
+- **Report subscription (subscribe_reports):** your email address or Webhook URL is used only to push new-report notifications; cancel anytime via `unsubscribe_reports`.
 - **Query tools** (company, packages, reports, knowledge base, contact) do not retain your personal information.
 - **Storage & deletion:** lead and subscription data is stored on DY Creative's own servers (Alibaba Cloud ECS, within China). To view or delete info you submitted, contact chuluu@dayucreative.tech.
 - The skill code in this repo is MIT-licensed open source; the remote MCP server is not part of this repo.
