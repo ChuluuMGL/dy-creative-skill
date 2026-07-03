@@ -19,12 +19,25 @@ CI:            .github/workflows/mcp-drift-check.yml (on skill.json change + dai
 """
 import json
 import os
+import re
 import sys
 import urllib.request
 
 MCP_URL = os.environ.get("MCP_URL", "https://www.dycreative.tech/mcp")
 SKILL_JSON = os.environ.get("SKILL_JSON", "skill.json")
 TIMEOUT = 15
+
+# Reference package floors documented in README ("参考价"). The price spot-check
+# verifies the server's get_service_packages still matches these, so a server-side
+# price change forces a README update instead of silently drifting. Business data
+# (pricing) is the most drift-prone content and is NOT covered by the tool-name check.
+# KEEP IN SYNC with the 套餐概览 table in README.md / README.en.md.
+# (定制版 is 面议 / on-request, so not numerically checked.)
+EXPECTED_PRICES = {
+    "入门版": 19800,
+    "专业版": 58000,
+    "旗舰版": 128000,
+}
 
 
 def rpc(method, params=None, rid=1):
@@ -75,6 +88,51 @@ def documented_tools():
     return out
 
 
+def call_tool(name, arguments=None):
+    data = rpc("tools/call", {"name": name, "arguments": arguments or {}}, 3)
+    if "error" in data:
+        return None, data["error"]
+    text = data["result"]["content"][0].get("text", "")
+    try:
+        return json.loads(text), None
+    except Exception:
+        return None, "non-JSON response"
+
+
+def check_prices():
+    """Spot-check that server package floors match the README reference prices."""
+    errors, warnings = [], []
+    payload, err = call_tool("get_service_packages")
+    if err is not None:
+        warnings.append(f"  ⚠ price spot-check skipped: get_service_packages unusable ({err})")
+        return errors, warnings
+    packages = payload.get("contentPackages") or payload.get("packages") or []
+    if not packages:
+        warnings.append("  ⚠ price spot-check skipped: no contentPackages in server response")
+        return errors, warnings
+    by_name = {}
+    for pk in packages:
+        nm = pk.get("name") or pk.get("planName")
+        if nm:
+            by_name[nm] = pk.get("price") or pk.get("monthlyFee") or ""
+    for plan, expected in EXPECTED_PRICES.items():
+        actual_str = by_name.get(plan)
+        if actual_str is None:
+            warnings.append(f"  ⚠ price spot-check: plan '{plan}' not found in server packages")
+            continue
+        nums = re.findall(r"\d[\d,]*", str(actual_str))
+        if not nums:
+            warnings.append(f"  ⚠ price spot-check: could not parse number from '{plan}' price '{actual_str}'")
+            continue
+        actual = int(nums[0].replace(",", ""))
+        if actual != expected:
+            errors.append(
+                f"  ✗ price drift: '{plan}' server floor ¥{actual:,} ≠ documented ¥{expected:,} "
+                f"(update README reference price AND EXPECTED_PRICES here)"
+            )
+    return errors, warnings
+
+
 def main():
     print(f"Comparing {SKILL_JSON}  against  {MCP_URL} ...")
     try:
@@ -112,6 +170,10 @@ def main():
     for name in srv:
         if name not in doc:
             warnings.append(f"  ⚠ '{name}' is exposed by the server but not documented in skill.json")
+
+    p_errors, p_warnings = check_prices()
+    errors += p_errors
+    warnings += p_warnings
 
     print(f"\nDocumented tools: {len(doc)} | Server tools: {len(srv)}")
     for w in warnings:
