@@ -2,9 +2,15 @@
   "name": "dy-creative-skill",
   "display_name": "大瑀创意科技营销服务查询",
   "description": "查询大瑀创意科技（DY Creative&Tech）的 AI 营销服务：公司介绍、服务套餐与报价、行业趋势报告、联系方式，支持提交合作线索。覆盖抖音代运营、小红书代运营、AIGC 内容营销、账号矩阵运营等业务。",
-  "version": "0.3.1",
-  "author": "大瑀创意科技",
+  "version": "0.4.0",
+  "author": {
+    "name": "大瑀创意科技",
+    "alternate_name": "DY Creative&Tech",
+    "url": "https://www.dycreative.tech/"
+  },
+  "copyright": "Copyright (c) 2026 大瑀创意科技",
   "license": "MIT",
+  "homepage": "https://www.dycreative.tech/",
   "repository": "https://github.com/ChuluuMGL/dy-creative-skill",
   "category": "商业服务",
   "keywords": [
@@ -30,7 +36,63 @@
     "BrandLens",
     "交付",
     "交付标准",
-    "交付规范"
+    "交付规范",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "agent-skill",
+    "marketing",
+    "aigc",
+    "douyin",
+    "xiaohongshu",
+    "china-marketing",
+    "lead-capture",
+    "claude-code"
+  ],
+  "compatibility": {
+    "format": "Agent Skills / SKILL.md (MCP-backed)",
+    "tested": [
+      "Claude Code"
+    ],
+    "expected": [
+      "Cursor",
+      "Trae",
+      "Qoder",
+      "Windsurf",
+      "Codex / OpenAI coding agent",
+      "Any MCP-compatible client (Streamable HTTP)"
+    ],
+    "notes": "本 Skill 依赖远程 MCP 端点 https://www.dycreative.tech/mcp 。查询类工具可在任意 MCP 兼容客户端直接使用；写入类工具（submit_lead / subscribe_reports / unsubscribe_reports）需端点在线。MCP 超时（>5s）时按 SKILL.md 降级策略回退到静态数据。"
+  },
+  "related_skills": [
+    {
+      "name": "business-website-skill",
+      "repository": "https://github.com/ChuluuMGL/business-website-skill",
+      "description": "构建客户级企业/品牌/B2B/提案级商业网站的 Agent Skill。"
+    },
+    {
+      "name": "proposal-ppt-skill",
+      "repository": "https://github.com/ChuluuMGL/proposal-ppt-skill",
+      "description": "生成阶段化商业提案 PPT 与逐字稿的 Agent Skill。"
+    },
+    {
+      "name": "yueyu-skill",
+      "repository": "https://github.com/ChuluuMGL/yueyu-skill",
+      "description": "查询 YUEYU TECH 公司与营销服务信息的姊妹 Skill。"
+    }
+  ],
+  "use_cases": [
+    "公司介绍与业务咨询",
+    "服务套餐与报价查询",
+    "行业趋势报告查询与订阅",
+    "创意营销知识库检索",
+    "商务联系方式获取",
+    "合作线索留资（submit_lead）"
+  ],
+  "not_for": [
+    "电商交易（购物车、支付、结算）",
+    "需要登录或 CRUD 的应用后端",
+    "实时合同条款与排期细节（属盲区，引导联系商务）"
   ],
   "mcp_server": {
     "transport": "streamable-http",
