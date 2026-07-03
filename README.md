@@ -276,7 +276,7 @@ dy-creative-skill/
 ├── README.en.md             # English README
 ├── CHANGELOG.md             # 版本变更记录
 ├── LICENSE
-├── social_preview.png       # GitHub social preview / hero
+├── social-preview.png       # GitHub social preview / hero
 ├── agents/
 │   └── openai.yaml          # Codex / OpenAI UI 元数据
 ├── references/
