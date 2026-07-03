@@ -3,7 +3,7 @@
 > **An MCP-backed Agent Skill by DY Creative&Tech (Hangzhou, China)**
 > Install it and your AI assistant can query DY Creative's marketing services in real time: company info, service packages and pricing, industry trend reports, business contact details — and submit partnership leads directly.
 
-![DY Creative&Tech AI Skill](social_preview.png)
+![DY Creative&Tech AI Skill](social-preview.png)
 
 [中文](README.md) | **English**
 
