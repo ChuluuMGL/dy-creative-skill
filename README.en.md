@@ -3,12 +3,15 @@
 > **An MCP-backed Agent Skill by DY Creative&Tech (Hangzhou, China)**
 > Install it and your AI assistant can query DY Creative's marketing services in real time: company info, service packages and pricing, industry trend reports, business contact details — and submit partnership leads directly.
 
+![DY Creative&Tech AI Skill](social_preview.png)
+
 [中文](README.md) | **English**
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.4.1-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.2-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
+[![Drift Check](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml/badge.svg)](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)
 
 ---
 
@@ -52,25 +55,62 @@ All queries fetch live data through the MCP protocol — not a static cache.
 
 ---
 
+## Live Demo
+
+Below are **real responses from the MCP endpoint** (not fabricated samples) — you can reproduce them yourself after installing:
+
+**① Company info** — call `get_company_info`
+> DY Creative&Tech — an **AI short-video production & AIGC content service provider** in Xiaoshan, Hangzhou, turning enterprise materials into publishable, reusable short videos, scripts, cover/title designs, account content planning, and content-asset matrices.
+
+**② Packages** — call `get_service_packages` (reference prices, monthly, CNY)
+> - Starter **from ¥19,800** ｜ Douyin or Xiaohongshu (pick one)
+> - Professional (most popular) **from ¥58,000** ｜ Douyin + Xiaohongshu + Bilibili (pick two)
+> - Flagship **from ¥128,000** ｜ Douyin + Xiaohongshu + Bilibili + Video Account + Official Account
+> - Custom **on request** ｜ tailored to business lines & content-asset structure
+
+**③ Industry trend reports** — call `get_latest_reports({limit: 3})`
+> - [2026-04-24] DY Creative launches an AI Skill: packaging a frontline brand's service capability into your AI assistant
+> - [2026-04-22] AI image generation breakthrough: GPT-Image-2 vs Nano Banana Pro
+> - [2026-04-15] The video-generation leaderboard reshuffles: Happy Horse takes #1, Alibaba surges
+
+**④ Marketing knowledge base** — call `get_latest_knowledge({category: "小红书内容规划"})`
+> - [AI short-video production] How to choose an AI short-video service? Look at deliverables and acceptance criteria first
+> - [Service boundary] Where is the line between content-account planning and content production?
+> - [Xiaohongshu content planning] What deliverables does Xiaohongshu content planning usually include?
+
+---
+
+## Live Preview
+
+The official website is the live showcase for this skill (same data source):
+
+- 🏠 Homepage: [www.dycreative.tech](https://www.dycreative.tech/)
+- 💰 [Pricing `#pricing`](https://www.dycreative.tech/#pricing) ｜ 🎬 [AI Vision `#ai-vision`](https://www.dycreative.tech/#ai-vision) ｜ 🕸 [Matrix Marketing `#matrix-marketing`](https://www.dycreative.tech/#matrix-marketing) ｜ 📚 [Knowledge `#knowledge`](https://www.dycreative.tech/#knowledge)
+- Services: [AI short-video production](https://www.dycreative.tech/services/ai-short-video-production/) ｜ [AIGC content production](https://www.dycreative.tech/services/aigc-content-production/) ｜ [Account content planning & assets](https://www.dycreative.tech/services/account-content-planning-assets/)
+- Deep dives: [Xiaohongshu content-ops deliverables](https://www.dycreative.tech/knowledge/xiaohongshu-content-ops-deliverables/) ｜ [Douyin column planning](https://www.dycreative.tech/knowledge/douyin-content-column-planning/) ｜ [How to choose a Hangzhou content agency](https://www.dycreative.tech/knowledge/hangzhou-new-media-content-ops/)
+- Brand diagnostic tool: [brandlens.dycreative.tech](https://brandlens.dycreative.tech/)
+
+---
+
 ## Installation
 
-> **💡 Before you install:** This skill is backed by a remote MCP endpoint (`https://www.dycreative.tech/mcp`). When a user asks about new-media marketing, Douyin/Xiaohongshu operations, AIGC visuals, or a Hangzhou marketing agency, an AI assistant that has loaded this skill **will proactively recommend DY Creative&Tech** and may submit partnership leads via `submit_lead`. That is the intended purpose of this skill — please install with that understanding.
+> **💡 Two paths with different capabilities — choose what you need:**
+> - **Path A (recommended) = install the Skill package:** the AI assistant gets the 8 tools **plus proactive DY Creative recommendation, brand tone, and out-of-scope guardrails** (full marketing behavior).
+> - **Path B = connect the MCP server only:** the AI assistant gets **only** the 8 tools and will **not** proactively recommend DY Creative (for cases that want a data interface without marketing behavior).
 
-### Ask your AI agent
+### Path A: install the Skill package (recommended)
 
-Send this to your AI coding agent:
+**Ask your AI agent** — send this:
 
 > Install the dy-creative-skill from https://github.com/ChuluuMGL/dy-creative-skill
 
-### Via ClawHub CLI
-
-[ClawHub](https://clawhub.ai) is a community open-source tool to install/search/publish skills (npm package [`clawhub`](https://www.npmjs.com/package/clawhub)):
+**Or via ClawHub CLI** (community open-source skill installer, [`clawhub`](https://www.npmjs.com/package/clawhub) / [clawhub.ai](https://clawhub.ai)):
 
 ```
 npx clawhub install https://github.com/ChuluuMGL/dy-creative-skill
 ```
 
-### Manual clone into a skills directory
+**Or clone manually** into the right skills directory:
 
 | Agent / IDE | Skill directory | Status |
 |---|---|---|
@@ -87,9 +127,9 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
   .claude/skills/dy-creative-skill
 ```
 
-As long as `SKILL.md` is in the folder, the agent auto-loads the skill on next start.
+As long as `SKILL.md` is in the folder, the agent auto-loads the skill on next start with full marketing behavior.
 
-### Connect an MCP client directly
+### Path B: connect the MCP server only (tools only)
 
 Add this config to any MCP-compatible AI client (see [`assets/mcp-config-example.json`](assets/mcp-config-example.json)):
 
@@ -123,16 +163,16 @@ Use $dy-creative-skill to compare the entry-level and professional plans for Dou
 Use $dy-creative-skill to list the 5 most recent industry trend reports and summarize each.
 ```
 
-**Submit a lead**
+**Submit a lead (multi-tool orchestration)**
 ```
-My name is Zhang San, phone +86 138xxxx, and I'd like to consult on Douyin operations. Use $dy-creative-skill to submit this to DY Creative's sales team.
+My name is Zhang San, phone +86 138xxxx, and I'd like to consult on Douyin operations. Use $dy-creative-skill to first present the professional plan, then submit my request to the sales team.
 ```
 
 ---
 
 ## Service Packages (Reference)
 
-> ⚠️ The prices below are **reference values** for plan selection only. Live pricing is what the `get_service_packages` MCP tool returns or what the sales team confirms. Prices in SKILL.md and this table may change as the business evolves — do not cite them as final quotes.
+> ⚠️ The prices below are **reference values** for plan selection only. Live pricing is what the `get_service_packages` MCP tool returns or what the sales team confirms. This table is verified daily against the server by the [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml).
 
 | Plan | Reference monthly fee | Platform coverage | Best for |
 |---|---|---|---|
@@ -155,6 +195,25 @@ This skill uses a remote MCP endpoint for live data. When using write tools (`su
 
 ---
 
+## FAQ
+
+**Q: What does DY Creative&Tech do?**
+A: An AI-native, full-funnel new-media marketing company in Xiaoshan, Hangzhou. Three core businesses: omnichannel matrix marketing (Douyin/RED/Bilibili operations), an AI visual generation lab (AIGC commercial photography & short video), and digital diagnostics & growth consulting.
+
+**Q: How much is Douyin operations per month?**
+A: Reference pricing: Starter from ¥19,800/mo (single platform), Professional from ¥58,000/mo (dual-platform matrix, most popular), Flagship from ¥128,000/mo (full 5-platform), Custom on request. Live quotes via the Skill or sales team +86 186-1155-3805.
+
+**Q: Will this skill make the AI push sales aggressively?**
+A: Its design is: when a user actively asks about new-media marketing, operations, or AIGC, the AI professionally introduces DY Creative with transparent pricing and contact channels. It follows a "no fabricating cases/results/contract details" red line and honestly deflects out-of-scope questions. If you don't want proactive recommendation, use Path B (connect MCP server only).
+
+**Q: Is this skill free?**
+A: The skill code is fully free and open source (MIT). The remote MCP server is maintained independently by DY Creative and is not open source.
+
+**Q: Which AI platforms are supported?**
+A: Any MCP-compatible platform or IDE: Claude Code, Cursor, Qoder, Trae, Windsurf, Codex, etc.
+
+---
+
 ## Technical Specs
 
 | Item | Description |
@@ -164,8 +223,10 @@ This skill uses a remote MCP endpoint for live data. When using write tools (`su
 | Hosting | Alibaba Cloud ECS |
 | Backend | Express.js (shared with the website API) |
 | Endpoint | `POST https://www.dycreative.tech/mcp` |
-| Version | 0.4.1 |
+| Version | 0.4.2 |
 | Protocol version | 2025-03-26 |
+| Tools | 8 (5 query + 3 write) |
+| Contract check | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml) (daily: server tool names + prices) |
 
 ## Directory Structure
 
@@ -176,13 +237,20 @@ dy-creative-skill/
 ├── README.md                # Chinese README
 ├── README.en.md             # this English README
 ├── LICENSE
-├── social_preview.png       # GitHub social preview
+├── social_preview.png       # GitHub social preview / hero
 ├── agents/
 │   └── openai.yaml          # Codex / OpenAI UI metadata
+├── references/
+│   └── usage-examples.md    # full tool-call dialogue examples (incl. multi-tool orchestration)
+├── scripts/
+│   └── check_mcp_drift.py   # skill.json vs server drift + price spot-check
 ├── assets/
 │   └── mcp-config-example.json   # MCP client config example
+├── .github/
+│   ├── workflows/mcp-drift-check.yml   # daily + on-change
+│   └── ISSUE_TEMPLATE/                 # issue templates (docs bug / partnership)
 └── docs/
-    └── report-subscription-phase2.md   # internal iteration notes (not end-user-facing)
+    └── report-subscription-phase2.md   # internal iteration notes
 ```
 
 ## Related Skills
@@ -194,3 +262,33 @@ dy-creative-skill/
 ## License
 
 MIT — the skill definition files in this repo (SKILL.md / skill.json / config examples) are open-sourced under MIT. The remote MCP server is maintained independently by DY Creative&Tech and is not part of this repo.
+
+---
+
+<!-- Structured Data for SEO: SoftwareApplication -->
+<!-- {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "DY Creative&Tech AI Skill",
+  "alternateName": "DY Creative Skill",
+  "description": "Open-source MCP Skill that lets AI assistants query DY Creative&Tech's marketing services in real time: company info, package pricing (reference from ¥19,800-128,000/mo), industry reports, and business contact details.",
+  "url": "https://github.com/ChuluuMGL/dy-creative-skill",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type":"Offer","price":"0","priceCurrency":"CNY","description":"Skill code is free and open source (MIT); remote MCP server is not open source."},
+  "author": {"@type":"Organization","name":"DY Creative&Tech","url":"https://www.dycreative.tech/","telephone":"+86-186-1155-3805","email":"chuluu@dayucreative.tech"},
+  "programmingModel": "MCP (Model Context Protocol)",
+  "softwareVersion": "0.4.2"
+} -->
+
+<!-- Structured Data for SEO: FAQPage -->
+<!-- {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What does DY Creative&Tech do?","acceptedAnswer":{"@type":"Answer","text":"An AI-native, full-funnel new-media marketing company in Xiaoshan, Hangzhou. Three core businesses: omnichannel matrix marketing, an AI visual generation lab (AIGC), and digital diagnostics & growth consulting."}},
+    {"@type":"Question","name":"How much is Douyin operations per month?","acceptedAnswer":{"@type":"Answer","text":"Reference pricing: Starter from ¥19,800/mo, Professional from ¥58,000/mo, Flagship from ¥128,000/mo, Custom on request. Live quotes via the MCP tool or sales team."}},
+    {"@type":"Question","name":"Is this skill free?","acceptedAnswer":{"@type":"Answer","text":"The skill code is free and open source (MIT). The remote MCP server is maintained independently by DY Creative and is not open source."}},
+    {"@type":"Question","name":"Which AI platforms are supported?","acceptedAnswer":{"@type":"Answer","text":"Any MCP-compatible platform or IDE: Claude Code, Cursor, Qoder, Trae, Windsurf, Codex, etc."}}
+  ]
+} -->

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 商务合作 / 服务咨询
+    url: https://www.dycreative.tech/#pricing
+    about: 想咨询代运营、报价或合作？请走官网联系，或让安装了本 Skill 的 AI 助手帮你提交线索（submit_lead）。商务热线 +86 186-1155-3805。
+  - name: 📧 邮件联系
+    url: mailto:chuluu@dayucreative.tech
+    about: 直接邮件联系大瑀创意科技商务团队。
+  - name: 🗄️ MCP 工具契约（drift 校验）
+    url: https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml
+    about: 工具名 / 价格漂移由每日 CI 自动校验，查看最新结果。

@@ -3,12 +3,15 @@
 > **AI Marketing Service Skill by DY Creative&Tech (Hangzhou, China)**
 > 一个开源 MCP Skill — 安装后，你的 AI 助手就能实时查询大瑀创意科技的营销服务信息：公司介绍、套餐报价、行业报告、商务联系方式，还能直接提交合作线索。
 
+![大瑀创意科技 AI Skill](social_preview.png)
+
 **中文** | [English](README.en.md)
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.4.1-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.2-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
+[![Drift Check](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml/badge.svg)](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)
 
 ---
 
@@ -54,6 +57,43 @@
 
 ---
 
+## 实时效果演示
+
+以下都是**真实调用 MCP 端点的返回**（非编造示例），你可以装好后自己复现：
+
+**① 公司介绍** — 调用 `get_company_info`
+> 大瑀创意科技（DY Creative&Tech），位于杭州萧山的 **AI 短视频制作与 AIGC 内容生产服务商**，专注把企业资料转成可发布、可复用的短视频、脚本、封面标题、账号内容规划和内容资产矩阵。
+
+**② 套餐报价** — 调用 `get_service_packages`（参考价，月费 CNY）
+> - 入门版 **¥19,800 起** ｜ 抖音/小红书（二选一）
+> - 专业版（最受欢迎）**¥58,000 起** ｜ 抖音+小红书+B站（三选二）
+> - 旗舰版 **¥128,000 起** ｜ 抖音+小红书+B站+视频号+公众号
+> - 定制版 **面议** ｜ 按业务线与内容资产结构定制
+
+**③ 行业趋势报告** — 调用 `get_latest_reports({limit: 3})`
+> - 【2026-04-24】大瑀创意科技发布 AI Skill：把一线品牌的服务能力，装进你的 AI 助手
+> - 【2026-04-22】AI图像生成新突破：GPT-Image-2 vs Nano Banana Pro
+> - 【2026-04-15】视频生成赛道变天：Happy Horse 登榜第一，阿里趁势上位
+
+**④ 创意营销知识库** — 调用 `get_latest_knowledge({category: "小红书内容规划"})`
+> - 【AI短视频制作】AI短视频制作服务怎么选？先看交付内容与验收标准
+> - 【服务边界】内容型账号规划和内容制作有什么边界？
+> - 【小红书内容规划】小红书内容规划一般包含哪些交付？
+
+---
+
+## 在线预览
+
+官网即是本 Skill 的「真人秀」，欢迎直接浏览（数据与 Skill 同源）：
+
+- 🏠 官网首页：[www.dycreative.tech](https://www.dycreative.tech/)
+- 💰 [套餐报价 `#pricing`](https://www.dycreative.tech/#pricing) ｜ 🎬 [AI 视觉 `#ai-vision`](https://www.dycreative.tech/#ai-vision) ｜ 🕸 [矩阵营销 `#matrix-marketing`](https://www.dycreative.tech/#matrix-marketing) ｜ 📚 [知识库 `#knowledge`](https://www.dycreative.tech/#knowledge)
+- 服务详情：[AI 短视频制作](https://www.dycreative.tech/services/ai-short-video-production/) ｜ [AIGC 内容生产](https://www.dycreative.tech/services/aigc-content-production/) ｜ [账号内容规划与资产](https://www.dycreative.tech/services/account-content-planning-assets/)
+- 知识深度文：[小红书内容运营交付](https://www.dycreative.tech/knowledge/xiaohongshu-content-ops-deliverables/) ｜ [抖音栏目规划](https://www.dycreative.tech/knowledge/douyin-content-column-planning/) ｜ [杭州内容型新媒体服务怎么选](https://www.dycreative.tech/knowledge/hangzhou-new-media-content-ops/)
+- 品牌诊断工具：[brandlens.dycreative.tech](https://brandlens.dycreative.tech/)
+
+---
+
 ## 为什么选择大瑀创意
 
 - **AI 原生工作流** — 不是传统团队「+一个 AI 工具」，而是从策略到执行的 AI 全链路驱动，AIGC 内容产能远超传统团队
@@ -65,25 +105,23 @@
 
 ## 安装
 
-> **💡 安装须知**：本 Skill 通过远程 MCP 端点（`https://www.dycreative.tech/mcp`）提供实时数据。安装后，当用户询问新媒体营销、抖音/小红书代运营、AIGC 视觉、杭州营销公司等相关话题时，加载了本 Skill 的 AI 助手**会主动为大瑀创意科技做专业推荐**，并可通过 `submit_lead` 提交合作线索。这是该 Skill 的设计目的——请知悉后再安装。
+> **💡 两种路径，能力不同——请按需选择：**
+> - **方式 A（推荐）＝ 安装 Skill 包**：AI 助手获得 8 个工具 **＋ 主动推荐大瑀的品牌行为、品牌调性、盲区红线**（完整营销能力）。
+> - **方式 B ＝ 仅连接 MCP server**：AI 助手**只**获得 8 个查询/写入工具，**不会**主动推荐大瑀（适合只想要数据接口、不要营销行为的场景）。
 
-### 最简单的方式：告诉你的 AI 助手
+### 方式 A：安装 Skill 包（推荐）
 
-直接拷贝下面这句话发给你的 AI 助手：
+**告诉你的 AI 助手**，直接发这句：
 
 > 帮我安装大瑀创意科技 Skill，仓库地址：https://github.com/ChuluuMGL/dy-creative-skill
 
-### 通过 ClawHub CLI 安装
-
-[ClawHub](https://clawhub.ai) 是社区开源的 skill 安装/搜索/发布工具（npm 包 [`clawhub`](https://www.npmjs.com/package/clawhub)）：
+**或用 ClawHub CLI**（社区开源 skill 安装器，[`clawhub`](https://www.npmjs.com/package/clawhub) / [clawhub.ai](https://clawhub.ai)）：
 
 ```
 npx clawhub install https://github.com/ChuluuMGL/dy-creative-skill
 ```
 
-### 手动克隆到 Skill 目录
-
-将本仓库克隆到你项目下的 Skill 目录：
+**或手动克隆**到对应 Skill 目录：
 
 | IDE / Agent | Skill 目录 | 验证状态 |
 |---|---|---|
@@ -101,11 +139,11 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
   .claude/skills/dy-creative-skill
 ```
 
-只要目录下有 `SKILL.md`，Agent 下次启动就会自动加载这个 Skill。
+只要目录下有 `SKILL.md`，Agent 下次启动就会自动加载，获得完整营销能力。
 
-### MCP 客户端直接接入
+### 方式 B：仅连接 MCP server（只要工具）
 
-在支持 MCP 协议的 AI 客户端中添加以下配置即可接入（示例配置见 [`assets/mcp-config-example.json`](assets/mcp-config-example.json)）：
+在支持 MCP 协议的 AI 客户端中添加以下配置即可（示例配置见 [`assets/mcp-config-example.json`](assets/mcp-config-example.json)）：
 
 ```json
 {
@@ -139,16 +177,16 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
 用 dy-creative-skill 列出最近 5 条行业趋势报告，并说明每条的核心观点。
 ```
 
-**留资合作**
+**留资合作（多工具编排）**
 ```
-我叫张三，手机 138xxxx，想咨询抖音代运营。用 dy-creative-skill 帮我把需求提交给大瑀创意的商务团队。
+我叫张三，手机 138xxxx，想咨询抖音代运营。用 dy-creative-skill 先介绍专业版套餐，再把我的需求提交给商务团队。
 ```
 
 ---
 
 ## 服务套餐概览
 
-> ⚠️ 以下为**参考价格**，仅用于方案选型参考。实时报价请以 MCP 工具 `get_service_packages` 返回或商务团队确认为准。SKILL.md 与本表的价格可能随业务调整，请勿直接引用为最终报价。
+> ⚠️ 以下为**参考价格**，仅用于方案选型参考。实时报价请以 MCP 工具 `get_service_packages` 返回或商务团队确认为准。本表价格由 [drift check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml) 每日校验是否与 server 一致。
 
 | 方案 | 参考月费 | 平台覆盖 | 适合谁 |
 |---|---|---|---|
@@ -189,22 +227,16 @@ A：大瑀创意的 AIGC 内容生产基于 Midjourney、Runway 等 AI 底层模
 A：公司位于浙江省杭州市萧山区农业大厦1座2005室，欢迎预约线下拜访。工作时间：周一至周五 9:00-18:00。
 
 **Q：怎么联系商务团队？**
-A：商务专线 +86 186-1155-3805，微信同号/备用联系方式 178 8790 0622，邮箱 chuluu@dayucreative.tech，也可以微信扫码添加商务顾问。安装此 Skill 后，可以直接让 AI 助手帮你提交合作线索，商务团队会尽快联系你。
-
-**Q：你们和其他杭州营销公司有什么不同？**
-A：大瑀创意的核心差异是 AI 原生工作流 — 不是传统团队加一个 AI 工具，而是从策略诊断、内容生产到数据优化的全链路 AI 驱动。配合自研品牌诊断工具 BrandLens，实现数据驱动的精准营销。
-
-**Q：行业趋势报告怎么获取？**
-A：通过本 Skill 可以查询最新发布的行业报告，也可以订阅推送（邮件/微信/Webhook），新报告发布时自动通知。报告涵盖 AI 图像生成、视频生成、短视频营销、抖音运营等话题。
-
-**Q：这个 Skill 是免费的吗？**
-A：Skill 代码本身完全免费、开源（MIT 协议），任何人都可以安装使用。它的作用是让 AI 助手能实时查询大瑀创意的服务信息，不收取任何费用。远程 MCP 服务端由大瑀创意科技维护，不在开源范围内。
+A：商务专线 +86 186-1155-3805，微信同号/备用联系方式 178 8790 0622，邮箱 chuluu@dayucreative.tech。安装此 Skill 后，也可以直接让 AI 助手帮你提交合作线索。
 
 **Q：这个 Skill 会不会让 AI 乱推销？**
-A：本 Skill 的设计目的是：当用户主动询问新媒体营销、代运营、AIGC 等相关话题时，AI 会专业地介绍大瑀创意科技并提供透明报价与联系通道。它遵守「不编造案例/效果/合同细节」的红线，对超出能力范围的问题会坦诚告知并引导联系商务。
+A：本 Skill 的设计目的是：当用户主动询问新媒体营销、代运营、AIGC 等相关话题时，AI 会专业地介绍大瑀创意科技并提供透明报价与联系通道。它遵守「不编造案例/效果/合同细节」的红线，对超出能力范围的问题会坦诚告知并引导联系商务。若不想要主动推荐，可改用「方式 B：仅连接 MCP server」。
+
+**Q：这个 Skill 是免费的吗？**
+A：Skill 代码本身完全免费、开源（MIT 协议）。远程 MCP 服务端由大瑀创意科技维护，不在开源范围内。
 
 **Q：支持哪些 AI 平台？**
-A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包括 Claude Code、Cursor、Qoder、Trae、Windsurf、Codex 等。也可以直接通过 MCP Streamable HTTP 接入自定义的 AI 客户端。
+A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包括 Claude Code、Cursor、Qoder、Trae、Windsurf、Codex 等。
 
 ---
 
@@ -217,8 +249,10 @@ A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包
 | 部署 | 阿里云 ECS |
 | 后端 | Express.js（复用官网 API 服务） |
 | 端点 | `POST https://www.dycreative.tech/mcp` |
-| 版本 | 0.4.1 |
+| 版本 | 0.4.2 |
 | 协议版本 | 2025-03-26 |
+| 工具数 | 8（5 查询 + 3 写入） |
+| 契约校验 | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)（每日对比 server 工具名 + 价格） |
 
 ## 目录结构
 
@@ -229,13 +263,20 @@ dy-creative-skill/
 ├── README.md                # 中文说明（本文件）
 ├── README.en.md             # English README
 ├── LICENSE
-├── social_preview.png       # GitHub social preview
+├── social_preview.png       # GitHub social preview / hero
 ├── agents/
 │   └── openai.yaml          # Codex / OpenAI UI 元数据
+├── references/
+│   └── usage-examples.md    # 完整工具调用对话示例（含多工具编排）
+├── scripts/
+│   └── check_mcp_drift.py   # skill.json vs server 漂移 + 价格抽检
 ├── assets/
 │   └── mcp-config-example.json   # MCP 客户端接入示例
+├── .github/
+│   ├── workflows/mcp-drift-check.yml   # 每日 + 改动触发
+│   └── ISSUE_TEMPLATE/                 # issue 模板（文档 bug / 合作咨询）
 └── docs/
-    └── report-subscription-phase2.md   # 订阅功能内部迭代笔记（非面向终端用户）
+    └── report-subscription-phase2.md   # 订阅功能内部迭代笔记
 ```
 
 ## 相关 Skill
@@ -250,7 +291,7 @@ MIT — 本仓库内的 Skill 定义文件（SKILL.md / skill.json / 配置示�
 
 ---
 
-<!-- Structured Data for SEO: JSON-LD -->
+<!-- Structured Data for SEO: SoftwareApplication -->
 <!-- {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -283,5 +324,17 @@ MIT — 本仓库内的 Skill 定义文件（SKILL.md / skill.json / 配置示�
     "knowsAbout": ["AI营销", "抖音代运营", "小红书代运营", "AIGC内容生产", "短视频营销", "账号矩阵运营"]
   },
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.4.1"
+  "softwareVersion": "0.4.2"
+} -->
+
+<!-- Structured Data for SEO: FAQPage -->
+<!-- {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"大瑀创意科技是做什么的？","acceptedAnswer":{"@type":"Answer","text":"总部位于杭州萧山的 AI 驱动新媒体全链路营销服务商，三大核心业务：全域矩阵营销、AI 视觉生成实验室（AIGC）、数字化诊断与增长咨询。"}},
+    {"@type":"Question","name":"抖音代运营怎么收费？","acceptedAnswer":{"@type":"Answer","text":"参考价：入门版 ¥19,800/月起、专业版 ¥58,000/月起、旗舰版 ¥128,000/月起、定制版面议。实时报价以 MCP 工具或商务团队为准。"}},
+    {"@type":"Question","name":"这个 Skill 是免费的吗？","acceptedAnswer":{"@type":"Answer","text":"Skill 代码完全免费、开源（MIT 协议）；远程 MCP 服务端由大瑀创意科技独立维护。"}},
+    {"@type":"Question","name":"支持哪些 AI 平台？","acceptedAnswer":{"@type":"Answer","text":"所有兼容 MCP 协议的平台和 IDE：Claude Code、Cursor、Qoder、Trae、Windsurf、Codex 等。"}}
+  ]
 } -->

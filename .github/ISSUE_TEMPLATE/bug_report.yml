@@ -1,0 +1,50 @@
+name: 🐛 Skill / 文档 / 工具 问题
+description: 报告 skill.json、SKILL.md、README 或 MCP 工具返回的问题（不含商务咨询）
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！本模板用于 **Skill 定义 / 文档 / MCP 工具返回** 的问题。
+        — 如果你是想**咨询合作 / 联系商务**，请不要提 issue，直接走下方「商务咨询」入口或让安装了本 Skill 的 AI 助手帮你 `submit_lead`。
+  - type: dropdown
+    id: area
+    attributes:
+      label: 问题范围
+      options:
+        - skill.json（工具定义 / schema）
+        - SKILL.md（Agent 指令）
+        - README / README.en（文档）
+        - MCP 工具返回（调用某工具结果异常）
+        - drift-check CI
+        - 其它
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: 涉及的工具（如适用）
+      placeholder: "get_latest_knowledge / submit_lead / ..."
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为（含报错 / 返回片段）
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现步骤
+      placeholder: "1. 调用 ... 2. 看到 ..."
+  - type: input
+    id: version
+    attributes:
+      label: Skill 版本
+      placeholder: "0.4.2"
