@@ -1,7 +1,51 @@
-interface:
-  display_name: "大瑀创意科技营销服务查询"
-  short_description: "Query DY Creative&Tech marketing services — packages, reports, knowledge, and lead capture via MCP."
-  default_prompt: "Use $dy-creative-skill to answer questions about 大瑀创意科技 (DY Creative&Tech): company info, service packages and pricing, latest industry reports, marketing knowledge base, and contact details. For partnership intent, collect name + phone/wechat and call submit_lead."
+# OpenAI / Codex agent metadata for dy-creative-skill.
+# Mirrors skill.json so a Codex/OpenAI consumer gets the full contract
+# (MCP endpoint + tool inventory + version) without opening skill.json.
+# Keep the version + tool list in sync with skill.json — checked by
+# scripts/check_mcp_drift.py (version consistency) on every PR.
+
+version: 0.4.3
+display_name: "大瑀创意科技营销服务查询"
+short_description: "Query DY Creative&Tech marketing services — packages, reports, knowledge, and lead capture via MCP."
+default_prompt: "Use $dy-creative-skill to answer questions about 大瑀创意科技 (DY Creative&Tech): company info, service packages and pricing, latest industry reports, marketing knowledge base, and contact details. For partnership intent, collect name + phone/wechat and call submit_lead."
+
+mcp:
+  transport: streamable-http
+  url: https://www.dycreative.tech/mcp
+  protocol_version: "2025-03-26"
 
 policy:
   allow_implicit_invocation: true
+
+# Tool inventory (8 = 5 query + 3 write). Names/schemas are verified daily
+# against the live server by the drift-check CI.
+tools:
+  - name: get_company_info
+    type: query
+    description: 公司基本信息（名称、简介、核心业务、总部地址、成立背景）。无参数。
+  - name: get_service_packages
+    type: query
+    description: 全部服务套餐与报价（代运营四档 + AI 视觉三档）。无参数。
+  - name: get_latest_reports
+    type: query
+    description: 最新行业趋势报告。参数：limit（默认5，最大20）、since（YYYY-MM-DD 增量）、offset（翻页）。
+  - name: get_latest_knowledge
+    type: query
+    description: 创意营销知识库词条。参数：category（分类筛选）、limit、offset。
+  - name: get_contact_info
+    type: query
+    description: 商务联系方式（电话、邮箱、微信二维码、地址、工作时间）。无参数。
+  - name: submit_lead
+    type: write
+    description: 提交合作线索到商务团队（飞书 + CRM）。需 name + 至少一种联系方式（phone 或 wechat）。
+  - name: subscribe_reports
+    type: write
+    description: 订阅趋势报告推送。需 channel（email/wechat/webhook）+ address。wechat 为运营人工转发。
+  - name: unsubscribe_reports
+    type: write
+    description: 取消订阅。需 address。
+
+guardrails:
+  no_fabrication: 回答具体信息前必须先调用对应工具取实时数据，禁止编造案例/效果/合同细节。
+  write_validation: 调用写入类工具前必须校验必填参数，缺失则先向用户追问。
+  fallback: MCP 超时（>5s）时可用文档静态数据降级回复。

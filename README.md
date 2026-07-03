@@ -8,7 +8,7 @@
 **中文** | [English](README.en.md)
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.4.2-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.3-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
 [![Drift Check](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml/badge.svg)](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)
@@ -59,7 +59,9 @@
 
 ## 实时效果演示
 
-以下都是**真实调用 MCP 端点的返回**（非编造示例），你可以装好后自己复现：
+以下都是**真实调用 MCP 端点的返回**（非编造示例），你可以装好后自己复现。
+
+> 注：报告与知识库内容持续滚动更新，下列标题为 **2026-04 采集的示例**，实际以 MCP 实时返回为准；套餐价格是 CI 每日校验的稳定参考值。
 
 **① 公司介绍** — 调用 `get_company_info`
 > 大瑀创意科技（DY Creative&Tech），位于杭州萧山的 **AI 短视频制作与 AIGC 内容生产服务商**，专注把企业资料转成可发布、可复用的短视频、脚本、封面标题、账号内容规划和内容资产矩阵。
@@ -195,6 +197,16 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
 | 旗舰版 | ¥128,000 起 | 抖音+小红书+B站+视频号+公众号 | 头部品牌全域护城河 |
 | 定制版 | 面议 | 全平台 + 定制化 | 集团/大型企业 |
 
+### AI 视觉服务（单条/单套计价，参考价）
+
+> 同样以 `get_service_packages` 实时返回为准。
+
+| 产品 | 参考价 | 适用场景 | 画质 |
+|---|---|---|---|
+| AI 营销短视频 | ¥2,980 起/条 | 抖音 / 小红书 / 视频号 / 官网日常内容 | 1080P / 4K |
+| AI 电商主图视频 | ¥5,800 起/套（含 15s + 30s） | 天猫 / 京东 / 独立站详情页 | 4K 超高清 |
+| AI TVC 级定制视频 | ¥19,800 起/条 | 品牌全渠道品宣 / 展会大屏 / 门店巡播 | 4K / 8K 电影级 |
+
 ---
 
 ## 数据与隐私
@@ -249,10 +261,10 @@ A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包
 | 部署 | 阿里云 ECS |
 | 后端 | Express.js（复用官网 API 服务） |
 | 端点 | `POST https://www.dycreative.tech/mcp` |
-| 版本 | 0.4.2 |
+| 版本 | 0.4.3 |
 | 协议版本 | 2025-03-26 |
 | 工具数 | 8（5 查询 + 3 写入） |
-| 契约校验 | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)（每日对比 server 工具名 + 价格） |
+| 契约校验 | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)（每日校验：工具名 + 价格 + 联系方式 + 版本号一致性） |
 
 ## 目录结构
 
@@ -262,6 +274,7 @@ dy-creative-skill/
 ├── skill.json               # 机器可读配置（MCP 端点、工具定义、品牌调性、兼容性）
 ├── README.md                # 中文说明（本文件）
 ├── README.en.md             # English README
+├── CHANGELOG.md             # 版本变更记录
 ├── LICENSE
 ├── social_preview.png       # GitHub social preview / hero
 ├── agents/
@@ -322,7 +335,7 @@ MIT — 本仓库内的 Skill 定义文件（SKILL.md / skill.json / 配置示�
     "knowsAbout": ["AI营销", "抖音代运营", "小红书代运营", "AIGC内容生产", "短视频营销", "账号矩阵运营"]
   },
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.4.2"
+  "softwareVersion": "0.4.3"
 } -->
 
 <!-- Structured Data for SEO: FAQPage -->

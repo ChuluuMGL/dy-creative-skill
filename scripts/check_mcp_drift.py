@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
 """
-Detect drift between tool definitions in skill.json and the live MCP server.
+Detect drift between tool definitions in skill.json and the live MCP server,
+plus consistency checks across the repo's hardcoded business data.
 
 Hard-fails (exit 1) when:
   - a tool documented in skill.json is NOT exposed by the server (name drift —
     callers would hit -32601 Unknown tool, which is exactly the v0.4.0 bug where
     docs said `get_knowledge_entries` but the server exposed `get_latest_knowledge`);
-  - documented inputSchema property keys / required fields differ from the server.
+  - documented inputSchema property keys / required fields differ from the server;
+  - get_service_packages floors differ from EXPECTED_PRICES (price drift — business
+    data is the most drift-prone content and was not covered by the tool-name check);
+  - get_contact_info phone/email/address differ from EXPECTED_CONTACT, OR the
+    README files' hardcoded contact strings fall out of sync (server-side change OR
+    a README edit both caught);
+  - README package tables (CN + EN) no longer show the EXPECTED_PRICES floors;
+  - the version string differs across skill.json / SKILL.md / README badges /
+    JSON-LD (manual version bumps historically missed files).
 
 Non-fatal warning when the server exposes a tool not documented in skill.json.
 
@@ -31,13 +40,34 @@ TIMEOUT = 15
 # verifies the server's get_service_packages still matches these, so a server-side
 # price change forces a README update instead of silently drifting. Business data
 # (pricing) is the most drift-prone content and is NOT covered by the tool-name check.
-# KEEP IN SYNC with the 套餐概览 table in README.md / README.en.md.
-# (定制版 is 面议 / on-request, so not numerically checked.)
+# KEEP IN SYNC with the 套餐概览 / Service Packages table in README.md / README.en.md
+# AND with the formatted reference floors appearing elsewhere in those READMEs.
+# (定制版 / Custom is 面议 / on-request, so not numerically checked.)
 EXPECTED_PRICES = {
     "入门版": 19800,
     "专业版": 58000,
     "旗舰版": 128000,
 }
+
+# Canonical contact values — the single source of truth. Both the live server
+# (get_contact_info) AND the hardcoded contact strings in the READMEs must match.
+# Catches drift in either direction: a server-side change OR a README edit.
+# phone + email are language-invariant (identical in CN + EN READMEs); the address
+# substring is checked against the Chinese README only (the EN README translates it).
+# KEEP IN SYNC with the "关于大瑀创意科技 / About" table in README.md / README.en.md.
+EXPECTED_CONTACT = {
+    "phone": "+86 186-1155-3805",
+    "email": "chuluu@dayucreative.tech",
+    "address_contains": "萧山区农业大厦1座2005室",
+}
+
+# Files whose version string + reference prices must stay consistent.
+README_FILES = ["README.md", "README.en.md"]
+
+
+def read(path):
+    with open(path, encoding="utf-8") as f:
+        return f.read()
 
 
 def rpc(method, params=None, rid=1):
@@ -133,6 +163,82 @@ def check_prices():
     return errors, warnings
 
 
+def check_contact():
+    """Live server contact info AND README hardcoded contacts must match EXPECTED_CONTACT."""
+    errors, warnings = [], []
+    payload, err = call_tool("get_contact_info")
+    if err is not None:
+        warnings.append(f"  ⚠ contact spot-check skipped: get_contact_info unusable ({err})")
+        return errors, warnings
+    s_phone = (payload.get("phone") or "").strip()
+    s_email = (payload.get("email") or "").strip()
+    s_addr = (payload.get("address") or "").strip()
+    if s_phone != EXPECTED_CONTACT["phone"]:
+        errors.append(f"  ✗ contact drift: server phone '{s_phone}' ≠ documented '{EXPECTED_CONTACT['phone']}'")
+    if s_email != EXPECTED_CONTACT["email"]:
+        errors.append(f"  ✗ contact drift: server email '{s_email}' ≠ documented '{EXPECTED_CONTACT['email']}'")
+    if EXPECTED_CONTACT["address_contains"] not in s_addr:
+        errors.append(
+            f"  ✗ contact drift: server address '{s_addr}' missing '{EXPECTED_CONTACT['address_contains']}' "
+            f"(update EXPECTED_CONTACT or fix the server)"
+        )
+
+    # README hardcoded strings — phone + email are language-invariant.
+    for path in README_FILES:
+        text = read(path)
+        if EXPECTED_CONTACT["phone"] not in text:
+            errors.append(f"  ✗ contact drift: {path} missing phone '{EXPECTED_CONTACT['phone']}'")
+        if EXPECTED_CONTACT["email"] not in text:
+            errors.append(f"  ✗ contact drift: {path} missing email '{EXPECTED_CONTACT['email']}'")
+    # Full address substring only in the Chinese README (EN translates it).
+    if EXPECTED_CONTACT["address_contains"] not in read("README.md"):
+        errors.append(f"  ✗ contact drift: README.md missing address '{EXPECTED_CONTACT['address_contains']}'")
+    return errors, warnings
+
+
+def check_versions():
+    """Every version string in the repo must equal skill.json's version."""
+    errors = []
+    with open(SKILL_JSON, encoding="utf-8") as f:
+        skill_version = json.load(f).get("version")
+    if not skill_version:
+        return ["  ✗ no 'version' field in skill.json (cannot verify version consistency)"]
+
+    # Plain-text occurrences (frontmatter + badges + tech-specs rows).
+    text_checks = [
+        ("SKILL.md", r"(?m)^version:\s*([^\s]+)\s*$"),
+        ("README.md", r"version-([^\s)-]+)-green"),
+        ("README.en.md", r"version-([^\s)-]+)-green"),
+    ]
+    for path, pat in text_checks:
+        m = re.search(pat, read(path))
+        found = m.group(1) if m else None
+        if found != skill_version:
+            errors.append(f"  ✗ version mismatch: {path} has '{found}' but skill.json has '{skill_version}'")
+
+    # JSON-LD softwareVersion in both READMEs.
+    for path in README_FILES:
+        m = re.search(r'"softwareVersion":\s*"([^"]+)"', read(path))
+        found = m.group(1) if m else None
+        if found != skill_version:
+            errors.append(f"  ✗ version mismatch: {path} JSON-LD softwareVersion has '{found}' but skill.json has '{skill_version}'")
+    return errors
+
+
+def check_readme_prices():
+    """Both READMEs must display the EXPECTED_PRICES floors (formatted ¥N,NNN)."""
+    errors = []
+    for plan, val in EXPECTED_PRICES.items():
+        formatted = f"¥{val:,}"  # e.g. ¥19,800
+        for path in README_FILES:
+            if formatted not in read(path):
+                errors.append(
+                    f"  ✗ README price drift: {path} missing reference floor '{formatted}' for '{plan}' "
+                    f"(update the README table or EXPECTED_PRICES here)"
+                )
+    return errors, []
+
+
 def main():
     print(f"Comparing {SKILL_JSON}  against  {MCP_URL} ...")
     try:
@@ -175,6 +281,16 @@ def main():
     errors += p_errors
     warnings += p_warnings
 
+    c_errors, c_warnings = check_contact()
+    errors += c_errors
+    warnings += c_warnings
+
+    r_errors, r_warnings = check_readme_prices()
+    errors += r_errors
+    warnings += r_warnings
+
+    errors += check_versions()
+
     print(f"\nDocumented tools: {len(doc)} | Server tools: {len(srv)}")
     for w in warnings:
         print(w)
@@ -185,11 +301,12 @@ def main():
             print(e)
         print(
             "\nFix: update skill.json (and SKILL.md / README) to match the deployed server, "
-            "or rename the server tool and redeploy."
+            "or rename the server tool and redeploy. For price/contact/version drift, update "
+            "the README AND the EXPECTED_* constants in this script."
         )
         sys.exit(1)
 
-    print("\n✓ No drift — skill.json tool names/schemas match the live server.")
+    print("\n✓ No drift — tool schemas, prices, contact info, and versions all consistent.")
     if warnings:
         print(f"  ({len(warnings)} non-fatal warning(s) listed above)")
 

@@ -8,7 +8,7 @@
 [中文](README.md) | **English**
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.4.2-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.3-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
 [![Drift Check](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml/badge.svg)](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)
@@ -57,7 +57,9 @@ All queries fetch live data through the MCP protocol — not a static cache.
 
 ## Live Demo
 
-Below are **real responses from the MCP endpoint** (not fabricated samples) — you can reproduce them yourself after installing:
+Below are **real responses from the MCP endpoint** (not fabricated samples) — you can reproduce them yourself after installing.
+
+> Note: report and knowledge-base content rolls over time — the titles below were **captured 2026-04**; live values come from the MCP endpoint. Package prices are stable reference values verified daily by CI.
 
 **① Company info** — call `get_company_info`
 > DY Creative&Tech — an **AI short-video production & AIGC content service provider** in Xiaoshan, Hangzhou, turning enterprise materials into publishable, reusable short videos, scripts, cover/title designs, account content planning, and content-asset matrices.
@@ -181,6 +183,16 @@ My name is Zhang San, phone +86 138xxxx, and I'd like to consult on Douyin opera
 | Flagship | from ¥128,000 | Douyin + Xiaohongshu + Bilibili + Video Account + Official Account | Top brands building a full moat |
 | Custom | on request | All platforms + customization | Groups / large enterprises |
 
+### AI Vision Services (priced per item, reference)
+
+> Live values via `get_service_packages`.
+
+| Product | Reference price | Best for | Quality |
+|---|---|---|---|
+| AI marketing short video | from ¥2,980 / clip | Douyin / RED / Video Account / website daily content | 1080P / 4K |
+| AI e-commerce main-image video | from ¥5,800 / set (15s + 30s) | Tmall / JD / standalone-store detail pages | 4K UHD |
+| AI TVC-grade custom video | from ¥19,800 / clip | Brand campaigns / expo screens / in-store loops | 4K / 8K cinematic |
+
 ---
 
 ## Data & Privacy
@@ -223,10 +235,10 @@ A: Any MCP-compatible platform or IDE: Claude Code, Cursor, Qoder, Trae, Windsur
 | Hosting | Alibaba Cloud ECS |
 | Backend | Express.js (shared with the website API) |
 | Endpoint | `POST https://www.dycreative.tech/mcp` |
-| Version | 0.4.2 |
+| Version | 0.4.3 |
 | Protocol version | 2025-03-26 |
 | Tools | 8 (5 query + 3 write) |
-| Contract check | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml) (daily: server tool names + prices) |
+| Contract check | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml) (daily: tool names + prices + contact info; version consistency) |
 
 ## Directory Structure
 
@@ -236,6 +248,7 @@ dy-creative-skill/
 ├── skill.json               # machine-readable config (MCP endpoint, tools, brand, compatibility)
 ├── README.md                # Chinese README
 ├── README.en.md             # this English README
+├── CHANGELOG.md             # version history
 ├── LICENSE
 ├── social_preview.png       # GitHub social preview / hero
 ├── agents/
@@ -276,7 +289,7 @@ MIT — the skill definition files in this repo (SKILL.md / skill.json / config 
   "offers": {"@type":"Offer","price":"0","priceCurrency":"CNY","description":"Skill code is free and open source (MIT); remote MCP server is not open source."},
   "author": {"@type":"Organization","name":"DY Creative&Tech","url":"https://www.dycreative.tech/","telephone":"+86-186-1155-3805","email":"chuluu@dayucreative.tech"},
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.4.2"
+  "softwareVersion": "0.4.3"
 } -->
 
 <!-- Structured Data for SEO: FAQPage -->

@@ -58,6 +58,8 @@
 
 用户说"有新报告通知我" → **前置校验**：若缺失订阅渠道（email、wechat 或 webhook）或接收地址，必须先追问获取具体渠道及地址后再调用 `subscribe_reports`。
 
+> 渠道说明：`email`、`webhook` 为自动推送；`wechat` 由大瑀运营人员**人工转发**（非实时直推），若用户在意时效，优先建议 email。同一地址重复订阅会去重，并以最新 `interests` 覆盖。
+
 * 示例 1（参数完整）：用户说"有新报告发我邮箱 test@example.com" → 调用 `subscribe_reports(channel="email", address="test@example.com")`
   > 好的，订阅成功！我们会通过您选择的渠道推送新报告通知。您也可以随时告诉我取消订阅。
 * 示例 2（参数缺失）：用户只说"有新报告通知我" → 追问："好的，请问您希望通过哪种渠道接收通知（邮件、微信或 Webhook）？并请提供您的具体接收地址。"
