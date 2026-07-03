@@ -2,7 +2,7 @@
   "name": "dy-creative-skill",
   "display_name": "大瑀创意科技营销服务查询",
   "description": "查询大瑀创意科技（DY Creative&Tech）的 AI 营销服务：公司介绍、服务套餐与报价、行业趋势报告、联系方式，支持提交合作线索。覆盖抖音代运营、小红书代运营、AIGC 内容营销、账号矩阵运营等业务。",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": {
     "name": "大瑀创意科技",
     "alternate_name": "DY Creative&Tech",
@@ -269,21 +269,26 @@
       }
     },
     {
-      "name": "get_knowledge_entries",
+      "name": "get_latest_knowledge",
       "display_name": "创意营销知识库",
-      "description": "查询大瑀创意科技的创意营销知识库。内容涵盖小红书代运营交付、抖音栏目规划、杭州新媒体运营怎么选、AI短视频制作等专业知识。当用户询问营销概念或想了解大瑀的服务标准与边界时使用。支持通过 query 关键字进行搜索，通过 limit 限制返回条数（默认5，最大10）。",
+      "description": "获取大瑀创意科技创意营销知识库的最新词条。内容涵盖 AI短视频制作、小红书/抖音内容规划、内容资产矩阵、服务边界与交付样例等主题。当用户询问营销概念、服务怎么选、AI短视频制作包含什么，或想了解大瑀的服务标准与边界时使用。支持 category 按分类筛选（如 AI短视频制作、小红书内容规划、抖音内容规划、内容资产矩阵），limit 限制返回条数（默认5，最大20），offset 翻页。",
       "inputSchema": {
         "type": "object",
         "properties": {
-          "query": {
+          "category": {
             "type": "string",
-            "description": "搜索关键词，例如：'小红书'、'短视频制作'"
+            "description": "按知识分类筛选，例如：AI短视频制作、小红书内容规划、抖音内容规划、内容资产矩阵"
           },
           "limit": {
             "type": "number",
-            "description": "返回条数，默认5，最大10",
+            "description": "返回词条数量，默认5条，最大20条",
             "default": 5,
-            "maximum": 10
+            "maximum": 20
+          },
+          "offset": {
+            "type": "number",
+            "description": "跳过前N条记录，用于分页，默认0",
+            "default": 0
           }
         },
         "required": []
