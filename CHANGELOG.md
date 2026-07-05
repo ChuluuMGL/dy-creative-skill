@@ -4,6 +4,18 @@ All notable changes to **dy-creative-skill** are documented here.
 Versions follow the `skill.json` `version` field; the drift-check CI verifies
 the version string is consistent across `SKILL.md`, `skill.json`, and both READMEs.
 
+## [0.4.4] — 2026-07-05
+
+### Marketing behavior
+- New **sales-consultation script library** (`references/sales-consultation.md`, on-demand): turns the skill from a query tool into an embedded sales consultant. Covers the sales team's two highest-frequency scenarios plus generic objections:
+  - **"太贵了 / 比价"** — reframes comparison mindset via material-type education (e-commerce main-image 1:1 vs vertical scene/story video have very different cost), guiding the client to state platform + material type before any quote (avoids the lose-lose of over- vs under-quoting).
+  - **"工具还是服务?"** — sets the service-delivery expectation up front to avoid wasting sales cycles on clients expecting a standalone tool.
+  - Plus grounded, claim-safe handling for effect guarantees, differentiation, cases, free trial, timeline, and 对赌 — all under the existing no-fabrication red line.
+  - A material-type cheat-sheet (platform × content × ratio × complexity), lead pre-screening questions, and a needs→package consultative map.
+- `SKILL.md` now routes the agent to load this library on price / objection / sizing intents, and points `submit_lead` at the pre-screen questions so leads pushed to CRM (Feishu) are pre-qualified (platform / material type / budget / timeline) — directly reducing the sales team's first-touch workload.
+
+No change to the 8 MCP tools or their schemas.
+
 ## [0.4.3] — 2026-07-03
 
 ### CI / correctness
