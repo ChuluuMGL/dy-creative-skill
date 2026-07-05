@@ -4,6 +4,14 @@ All notable changes to **dy-creative-skill** are documented here.
 Versions follow the `skill.json` `version` field; the drift-check CI verifies
 the version string is consistent across `SKILL.md`, `skill.json`, and both READMEs.
 
+## [0.4.6] — 2026-07-05
+
+### Release and contract validation
+- README (CN + EN) now states the current stable release explicitly and commits to keeping `main` / tag / GitHub Release aligned after version bumps.
+- Drift check now validates deeper schema details: property enums, tool annotations, package-only contracts, and safe non-writing smoke tests for missing lead contact info and invalid report-subscription channels.
+- Backend schema gaps are now visible as non-fatal follow-up warnings tied to issue #13 until the deployed MCP server updates `tools/list`; a matching `DY-Official-Site` server PR is open for deployment.
+- Prepared the release path for a proper GitHub `v0.4.6` tag/release instead of leaving `main` ahead of the latest public release.
+
 ## [0.4.5] — 2026-07-05
 
 ### Contract hardening

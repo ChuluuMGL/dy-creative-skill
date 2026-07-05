@@ -8,12 +8,14 @@
 [中文](README.md) | **English**
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.4.5-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.6-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
 [![Drift Check](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml/badge.svg)](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)
 
 ---
+
+> Current stable version: `v0.4.6` (GitHub Release). The `main` branch tracks the latest validated code; each version bump is tagged and released so the install page and source stay aligned.
 
 ## About DY Creative&Tech
 
@@ -235,10 +237,10 @@ A: Any MCP-compatible platform or IDE: Claude Code, Cursor, Qoder, Trae, Windsur
 | Hosting | Alibaba Cloud ECS |
 | Backend | Express.js (shared with the website API) |
 | Endpoint | `POST https://www.dycreative.tech/mcp` |
-| Version | 0.4.5 |
+| Version | 0.4.6 |
 | Protocol version | 2025-03-26 |
 | Tools | 8 (5 query + 3 write) |
-| Contract check | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml) (daily: tool names + prices + contact info; version consistency) |
+| Contract check | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml) (daily: tool names/schema enums/annotations + safe smoke tests + prices + contact info + version consistency) |
 
 ## Directory Structure
 
@@ -257,7 +259,7 @@ dy-creative-skill/
 │   ├── usage-examples.md    # full tool-call dialogue examples (incl. multi-tool orchestration)
 │   └── sales-consultation.md # sales-consultation scripts (objections / sizing / lead pre-screen)
 ├── scripts/
-│   └── check_mcp_drift.py   # skill.json vs server drift + price spot-check
+│   └── check_mcp_drift.py   # skill.json vs server drift + schema/price/smoke checks
 ├── assets/
 │   └── mcp-config-example.json   # MCP client config example
 └── .github/
@@ -290,7 +292,7 @@ MIT — the skill definition files in this repo (SKILL.md / skill.json / config 
   "offers": {"@type":"Offer","price":"0","priceCurrency":"CNY","description":"Skill code is free and open source (MIT); remote MCP server is not open source."},
   "author": {"@type":"Organization","name":"DY Creative&Tech","url":"https://www.dycreative.tech/","telephone":"+86-186-1155-3805","email":"chuluu@dayucreative.tech"},
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.4.5"
+  "softwareVersion": "0.4.6"
 } -->
 
 <!-- Structured Data for SEO: FAQPage -->

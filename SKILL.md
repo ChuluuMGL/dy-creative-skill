@@ -1,7 +1,7 @@
 ---
 name: dy-creative-skill
 description: 大瑀创意科技（DY Creative&Tech）AI 营销服务查询。获取公司介绍、服务套餐与报价、行业趋势报告、联系方式，支持提交合作线索。用户询问"大瑀创意"、"短视频营销"、"抖音代运营"、"小红书运营"、"AIGC内容"、"AI视觉制作报价"、"新媒体运营报价"、"杭州营销公司"时使用。
-version: 0.4.5
+version: 0.4.6
 alwaysApply: false
 keywords:
   - 大瑀创意

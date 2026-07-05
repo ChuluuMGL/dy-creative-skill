@@ -7,7 +7,9 @@ Hard-fails (exit 1) when:
   - a tool documented in skill.json is NOT exposed by the server (name drift —
     callers would hit -32601 Unknown tool, which is exactly the v0.4.0 bug where
     docs said `get_knowledge_entries` but the server exposed `get_latest_knowledge`);
-  - documented inputSchema property keys / required fields differ from the server;
+  - documented inputSchema property keys / required fields / property enums differ
+    from the server, except known backend follow-ups listed below;
+  - tool annotations differ from the server;
   - get_service_packages floors differ from EXPECTED_PRICES (price drift — business
     data is the most drift-prone content and was not covered by the tool-name check);
   - get_contact_info phone/email/address differ from EXPECTED_CONTACT, OR the
@@ -17,9 +19,11 @@ Hard-fails (exit 1) when:
   - the version string differs across skill.json / SKILL.md / README badges /
     JSON-LD (manual version bumps historically missed files);
   - local agent/package contracts drift: submit_lead must require name plus
-    phone-or-wechat, and subscribe_reports must advertise only email/webhook.
+    phone-or-wechat, and subscribe_reports must advertise only email/webhook;
+  - safe smoke tests show handlers accepting incomplete leads or invalid channels.
 
 Non-fatal warning when the server exposes a tool not documented in skill.json.
+Non-fatal warning for known backend schema follow-ups tracked in GitHub issues.
 
 Config (env):
   MCP_URL     default https://www.dycreative.tech/mcp
@@ -80,6 +84,14 @@ README_FILES = ["README.md", "README.en.md"]
 # READMEs are consumer-facing; references/sales-consultation.md also cites them.
 PRICE_FILES = ["README.md", "README.en.md", "references/sales-consultation.md"]
 
+# Known backend schema gaps that cannot be fixed in this package alone. These
+# stay warnings so package CI remains useful while the website/MCP server is
+# updated and deployed.
+SERVER_SCHEMA_FOLLOWUPS = {
+    "submit_lead.anyOf": "https://github.com/ChuluuMGL/dy-creative-skill/issues/13",
+    "subscribe_reports.channel.enum": "https://github.com/ChuluuMGL/dy-creative-skill/issues/13",
+}
+
 
 def read(path):
     with open(path, encoding="utf-8") as f:
@@ -128,8 +140,10 @@ def documented_tools():
     for t in doc.get("tools", []):
         schema = t.get("inputSchema", {}) or {}
         out[t["name"]] = {
+            "schema": schema,
             "props": set((schema.get("properties") or {}).keys()),
             "required": set(schema.get("required") or []),
+            "annotations": t.get("annotations", {}) or {},
         }
     return out
 
@@ -280,6 +294,22 @@ def _required_sets(items):
     return {frozenset(item.get("required", [])) for item in items if isinstance(item, dict)}
 
 
+def _enum_by_property(schema):
+    out = {}
+    for name, prop in (schema.get("properties") or {}).items():
+        if isinstance(prop, dict) and "enum" in prop:
+            out[name] = tuple(prop.get("enum") or [])
+    return out
+
+
+def _add_schema_mismatch(errors, warnings, key, message):
+    issue = SERVER_SCHEMA_FOLLOWUPS.get(key)
+    if issue:
+        warnings.append(f"  ⚠ backend schema follow-up ({issue}): {message}")
+    else:
+        errors.append(f"  ✗ {message}")
+
+
 def _openai_tool_block(name):
     text = read("agents/openai.yaml")
     marker = f"  - name: {name}"
@@ -321,6 +351,28 @@ def check_local_contracts():
     return errors
 
 
+def check_safe_smoke_tests():
+    """Call non-writing validation paths to ensure handlers reject bad input."""
+    errors, warnings = [], []
+
+    payload, err = call_tool("submit_lead", {"name": "Contract Smoke Test"})
+    if err is not None:
+        warnings.append(f"  ⚠ smoke skipped: submit_lead validation call failed ({err})")
+    elif payload.get("success") is not False:
+        errors.append("  ✗ smoke: submit_lead accepted a lead without phone or wechat")
+
+    payload, err = call_tool("subscribe_reports", {
+        "channel": "sms",
+        "address": "contract-smoke@example.com",
+    })
+    if err is not None:
+        warnings.append(f"  ⚠ smoke skipped: subscribe_reports validation call failed ({err})")
+    elif payload.get("success") is not False:
+        errors.append("  ✗ smoke: subscribe_reports accepted invalid channel 'sms'")
+
+    return errors, warnings
+
+
 def main():
     print(f"Comparing {SKILL_JSON}  against  {MCP_URL} ...")
     try:
@@ -355,6 +407,34 @@ def main():
                 f"  ✗ '{name}': required mismatch — doc={sorted(d['required'])} server={sorted(sreq)}"
             )
 
+        denums = _enum_by_property(d["schema"])
+        senums = _enum_by_property(sschema)
+        for prop, denum in denums.items():
+            senum = senums.get(prop)
+            if set(denum) != set(senum or []):
+                _add_schema_mismatch(
+                    errors,
+                    warnings,
+                    f"{name}.{prop}.enum",
+                    f"'{name}.{prop}': enum mismatch — doc={list(denum)} server={list(senum or [])}",
+                )
+
+        d_any_of = _required_sets(d["schema"].get("anyOf", []))
+        s_any_of = _required_sets(sschema.get("anyOf", []))
+        if d_any_of != s_any_of:
+            _add_schema_mismatch(
+                errors,
+                warnings,
+                f"{name}.anyOf",
+                f"'{name}': anyOf mismatch — doc={sorted(map(sorted, d_any_of))} server={sorted(map(sorted, s_any_of))}",
+            )
+
+        sann = s.get("annotations", {}) or {}
+        if d["annotations"] != sann:
+            errors.append(
+                f"  ✗ '{name}': annotations mismatch — doc={d['annotations']} server={sann}"
+            )
+
     for name in srv:
         if name not in doc:
             warnings.append(f"  ⚠ '{name}' is exposed by the server but not documented in skill.json")
@@ -374,6 +454,10 @@ def main():
     errors += check_versions()
     errors += check_local_contracts()
 
+    s_errors, s_warnings = check_safe_smoke_tests()
+    errors += s_errors
+    warnings += s_warnings
+
     print(f"\nDocumented tools: {len(doc)} | Server tools: {len(srv)}")
     for w in warnings:
         print(w)
@@ -389,7 +473,7 @@ def main():
         )
         sys.exit(1)
 
-    print("\n✓ No drift — tool schemas, prices, contact info, versions, and local contracts all consistent.")
+    print("\n✓ No blocking drift — tool schemas, prices, contact info, versions, local contracts, and smoke tests are consistent.")
     if warnings:
         print(f"  ({len(warnings)} non-fatal warning(s) listed above)")
 

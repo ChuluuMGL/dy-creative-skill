@@ -11,7 +11,7 @@
 
 ## 提交前请确认
 
-1. **改动工具定义时**——CI（[mcp-drift-check](.github/workflows/mcp-drift-check.yml)）会在 PR 上自动跑，校验 `skill.json` 与 server `tools/list` 一致；价格改动需同时更新 README 套餐表与 `scripts/check_mcp_drift.py` 里的 `EXPECTED_PRICES`。
+1. **改动工具定义时**——CI（[mcp-drift-check](.github/workflows/mcp-drift-check.yml)）会在 PR 上自动跑，校验 `skill.json` 与 server `tools/list` 的工具名、参数、enum、annotations 等关键契约；价格改动需同时更新 README 套餐表与 `scripts/check_mcp_drift.py` 里的 `EXPECTED_PRICES`。
 2. **中英文同步**——README.md 与 README.en.md 描述同一事实，改了中文请同步英文。
 3. **本地先跑校验**：
 
