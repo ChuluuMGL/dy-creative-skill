@@ -20,6 +20,17 @@
    python3 -c "import json; json.load(open('skill.json'))"   # JSON 合法
    ```
 
+## 维护者部署检查
+
+远程 MCP 服务端不在本仓库内，但维护者同步官网后端 schema 后必须按真实线上进程名重启并验证：
+
+```bash
+PM2_HOME=/root/.pm2 pm2 restart dayu-backend --update-env
+python3 scripts/check_mcp_drift.py
+```
+
+`dayu-backend` 是阿里云 ECS 上 root PM2 的实际进程名。`check_mcp_drift.py` 必须无 drift / warning；如果 schema 回退，CI 应失败，而不是只给非阻塞提示。
+
 ## 不接受的范围
 
 - ❌ 远程 MCP 服务端代码（不在此仓库）。

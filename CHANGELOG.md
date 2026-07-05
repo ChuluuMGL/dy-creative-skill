@@ -4,12 +4,19 @@ All notable changes to **dy-creative-skill** are documented here.
 Versions follow the `skill.json` `version` field; the drift-check CI verifies
 the version string is consistent across `SKILL.md`, `skill.json`, and both READMEs.
 
+## [0.4.7] — 2026-07-05
+
+### Deployment verification hardening
+- Removed the temporary non-fatal backend-schema follow-up exemptions from `scripts/check_mcp_drift.py`; `submit_lead.anyOf` and `subscribe_reports.channel.enum` regressions now fail drift-check directly.
+- Documented the real Alibaba Cloud runtime process (`dayu-backend` under root PM2) and the post-deploy verification command sequence in README / CONTRIBUTING.
+- Confirmed the deployed MCP server is aligned with the skill contract: no drift, no backend schema warnings, and safe smoke tests pass.
+
 ## [0.4.6] — 2026-07-05
 
 ### Release and contract validation
 - README (CN + EN) now states the current stable release explicitly and commits to keeping `main` / tag / GitHub Release aligned after version bumps.
 - Drift check now validates deeper schema details: property enums, tool annotations, package-only contracts, and safe non-writing smoke tests for missing lead contact info and invalid report-subscription channels.
-- Backend schema gaps are now visible as non-fatal follow-up warnings tied to issue #13 until the deployed MCP server updates `tools/list`; a matching `DY-Official-Site` server PR is open for deployment.
+- At release time, backend schema gaps were made visible as non-fatal follow-up warnings tied to issue #13 while the deployed MCP server was being updated.
 - Prepared the release path for a proper GitHub `v0.4.6` tag/release instead of leaving `main` ahead of the latest public release.
 
 ## [0.4.5] — 2026-07-05

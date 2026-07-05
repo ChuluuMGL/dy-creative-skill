@@ -8,7 +8,7 @@ Hard-fails (exit 1) when:
     callers would hit -32601 Unknown tool, which is exactly the v0.4.0 bug where
     docs said `get_knowledge_entries` but the server exposed `get_latest_knowledge`);
   - documented inputSchema property keys / required fields / property enums differ
-    from the server, except known backend follow-ups listed below;
+    from the server;
   - tool annotations differ from the server;
   - get_service_packages floors differ from EXPECTED_PRICES (price drift — business
     data is the most drift-prone content and was not covered by the tool-name check);
@@ -23,14 +23,13 @@ Hard-fails (exit 1) when:
   - safe smoke tests show handlers accepting incomplete leads or invalid channels.
 
 Non-fatal warning when the server exposes a tool not documented in skill.json.
-Non-fatal warning for known backend schema follow-ups tracked in GitHub issues.
 
 Config (env):
   MCP_URL     default https://www.dycreative.tech/mcp
   SKILL_JSON  default skill.json
 
 Run locally:   python3 scripts/check_mcp_drift.py
-CI:            .github/workflows/mcp-drift-check.yml (on skill.json change + daily)
+CI:            .github/workflows/mcp-drift-check.yml (on contract/docs changes + daily)
 """
 import json
 import os
@@ -83,15 +82,6 @@ README_FILES = ["README.md", "README.en.md"]
 # Files that must display the reference price floors (content + AI vision).
 # READMEs are consumer-facing; references/sales-consultation.md also cites them.
 PRICE_FILES = ["README.md", "README.en.md", "references/sales-consultation.md"]
-
-# Known backend schema gaps that cannot be fixed in this package alone. These
-# stay warnings so package CI remains useful while the website/MCP server is
-# updated and deployed.
-SERVER_SCHEMA_FOLLOWUPS = {
-    "submit_lead.anyOf": "https://github.com/ChuluuMGL/dy-creative-skill/issues/13",
-    "subscribe_reports.channel.enum": "https://github.com/ChuluuMGL/dy-creative-skill/issues/13",
-}
-
 
 def read(path):
     with open(path, encoding="utf-8") as f:
@@ -246,7 +236,7 @@ def check_versions():
 
     # Plain-text occurrences (frontmatter + badges + agent metadata).
     text_checks = [
-        ("SKILL.md", r"(?m)^version:\s*([^\s]+)\s*$"),
+        ("SKILL.md", r"(?m)^\s{2}version:\s*([^\s]+)\s*$"),
         ("agents/openai.yaml", r"(?m)^version:\s*([^\s]+)\s*$"),
         ("README.md", r"version-([^\s)-]+)-green"),
         ("README.en.md", r"version-([^\s)-]+)-green"),
@@ -302,12 +292,8 @@ def _enum_by_property(schema):
     return out
 
 
-def _add_schema_mismatch(errors, warnings, key, message):
-    issue = SERVER_SCHEMA_FOLLOWUPS.get(key)
-    if issue:
-        warnings.append(f"  ⚠ backend schema follow-up ({issue}): {message}")
-    else:
-        errors.append(f"  ✗ {message}")
+def _add_schema_mismatch(errors, message):
+    errors.append(f"  ✗ {message}")
 
 
 def _openai_tool_block(name):
@@ -414,8 +400,6 @@ def main():
             if set(denum) != set(senum or []):
                 _add_schema_mismatch(
                     errors,
-                    warnings,
-                    f"{name}.{prop}.enum",
                     f"'{name}.{prop}': enum mismatch — doc={list(denum)} server={list(senum or [])}",
                 )
 
@@ -424,8 +408,6 @@ def main():
         if d_any_of != s_any_of:
             _add_schema_mismatch(
                 errors,
-                warnings,
-                f"{name}.anyOf",
                 f"'{name}': anyOf mismatch — doc={sorted(map(sorted, d_any_of))} server={sorted(map(sorted, s_any_of))}",
             )
 
