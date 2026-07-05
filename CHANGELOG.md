@@ -9,8 +9,9 @@ the version string is consistent across `SKILL.md`, `skill.json`, and both READM
 ### CI / correctness
 - **drift-check extended** (`scripts/check_mcp_drift.py`): now also verifies
   - **contact info** (`get_contact_info`) — phone/email/address match the live server AND the READMEs (catches server-side change or a README edit);
-  - **version consistency** — `skill.json` version equals the `SKILL.md` frontmatter, both README badges, and both JSON-LD `softwareVersion` values (prevents the manual 4-place version-sync misses);
+  - **version consistency** — `skill.json` version equals the `SKILL.md` frontmatter, `agents/openai.yaml`, both README badges, and both JSON-LD `softwareVersion` values (prevents the manual version-sync misses across 6 places);
   - **README reference prices** — content floors (`¥19,800 / ¥58,000 / ¥128,000`) AND AI-vision floors (`¥2,980 / ¥5,800 / ¥19,800`) are verified on the server and present in both READMEs (closes the manual CN↔EN sync gap; AI-vision pricing was previously unprotected).
+- **drift-check workflow** (`mcp-drift-check.yml`) now triggers on `SKILL.md` / `README.md` / `README.en.md` / `agents/openai.yaml` edits too, not just `skill.json` — so README price/contact/version drift is caught on the PR, not only by the daily cron.
 
 ### Tooling contracts
 - **`agents/openai.yaml`** fully populated — MCP endpoint + protocol version + 8-tool inventory + guardrails, so Codex/OpenAI consumers get the complete contract (was display-name + prompt only).
