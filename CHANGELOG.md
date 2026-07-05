@@ -13,6 +13,7 @@ the version string is consistent across `SKILL.md`, `skill.json`, and both READM
   - Plus grounded, claim-safe handling for effect guarantees, differentiation, cases, free trial, timeline, and 对赌 — all under the existing no-fabrication red line.
   - A material-type cheat-sheet (platform × content × ratio × complexity), lead pre-screening questions, and a needs→package consultative map.
 - `SKILL.md` now routes the agent to load this library on price / objection / sizing intents, and points `submit_lead` at the pre-screen questions so leads pushed to CRM (Feishu) are pre-qualified (platform / material type / budget / timeline) — directly reducing the sales team's first-touch workload.
+- drift-check now also verifies the reference price floors appear in `references/sales-consultation.md`, so the话术 prices can't drift unprotected.
 
 No change to the 8 MCP tools or their schemas.
 
