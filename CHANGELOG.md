@@ -4,6 +4,13 @@ All notable changes to **dy-creative-skill** are documented here.
 Versions follow the `skill.json` `version` field; the drift-check CI verifies
 the version string is consistent across `SKILL.md`, `skill.json`, and both READMEs.
 
+## [0.4.5] — 2026-07-05
+
+### Contract hardening
+- `submit_lead` now encodes the existing lead-capture rule directly in `skill.json`: callers must provide `name` plus at least one contact method (`phone` or `wechat`).
+- `agents/openai.yaml` now matches the real `subscribe_reports` contract: report subscriptions support only `email` and `webhook`, not `wechat`.
+- `check_mcp_drift.py` now protects these local agent/package contracts so future edits cannot silently reintroduce the mismatch.
+
 ## [0.4.4] — 2026-07-05
 
 ### Marketing behavior

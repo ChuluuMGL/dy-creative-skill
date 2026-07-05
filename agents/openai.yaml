@@ -4,7 +4,7 @@
 # Keep the version + tool list in sync with skill.json — checked by
 # scripts/check_mcp_drift.py (version consistency) on every PR.
 
-version: 0.4.4
+version: 0.4.5
 display_name: "大瑀创意科技营销服务查询"
 short_description: "Query DY Creative&Tech marketing services — packages, reports, knowledge, and lead capture via MCP."
 default_prompt: "Use $dy-creative-skill to answer questions about 大瑀创意科技 (DY Creative&Tech): company info, service packages and pricing, latest industry reports, marketing knowledge base, and contact details. For partnership intent, collect name + phone/wechat and call submit_lead."
@@ -40,7 +40,7 @@ tools:
     description: 提交合作线索到商务团队（飞书 + CRM）。需 name + 至少一种联系方式（phone 或 wechat）。
   - name: subscribe_reports
     type: write
-    description: 订阅趋势报告推送。需 channel（email/wechat/webhook）+ address。wechat 为运营人工转发。
+    description: 订阅趋势报告推送。需 channel（email/webhook）+ address。仅支持这两种自动推送渠道。
   - name: unsubscribe_reports
     type: write
     description: 取消订阅。需 address。

@@ -15,7 +15,9 @@ Hard-fails (exit 1) when:
     a README edit both caught);
   - README package tables (CN + EN) no longer show the EXPECTED_PRICES floors;
   - the version string differs across skill.json / SKILL.md / README badges /
-    JSON-LD (manual version bumps historically missed files).
+    JSON-LD (manual version bumps historically missed files);
+  - local agent/package contracts drift: submit_lead must require name plus
+    phone-or-wechat, and subscribe_reports must advertise only email/webhook.
 
 Non-fatal warning when the server exposes a tool not documented in skill.json.
 
@@ -265,6 +267,60 @@ def check_readme_prices():
     return errors, []
 
 
+def _tool_by_name(name):
+    with open(SKILL_JSON, encoding="utf-8") as f:
+        doc = json.load(f)
+    for tool in doc.get("tools", []):
+        if tool.get("name") == name:
+            return tool
+    return None
+
+
+def _required_sets(items):
+    return {frozenset(item.get("required", [])) for item in items if isinstance(item, dict)}
+
+
+def _openai_tool_block(name):
+    text = read("agents/openai.yaml")
+    marker = f"  - name: {name}"
+    start = text.find(marker)
+    if start < 0:
+        return ""
+    rest = text[start + len(marker):]
+    end = rest.find("\n  - name: ")
+    return text[start:] if end < 0 else text[start:start + len(marker) + end]
+
+
+def check_local_contracts():
+    """Validate package-only contracts that are stricter than the live MCP schema."""
+    errors = []
+
+    submit = _tool_by_name("submit_lead")
+    submit_schema = (submit or {}).get("inputSchema", {}) or {}
+    if set(submit_schema.get("required", [])) != {"name"}:
+        errors.append("  ✗ local contract: submit_lead must require 'name'")
+    any_of_required = _required_sets(submit_schema.get("anyOf", []))
+    if any_of_required != {frozenset({"phone"}), frozenset({"wechat"})}:
+        errors.append("  ✗ local contract: submit_lead must require one of 'phone' or 'wechat' via anyOf")
+
+    subscribe = _tool_by_name("subscribe_reports")
+    subscribe_schema = (subscribe or {}).get("inputSchema", {}) or {}
+    channel = ((subscribe_schema.get("properties") or {}).get("channel") or {})
+    if set(channel.get("enum", [])) != {"email", "webhook"}:
+        errors.append("  ✗ local contract: subscribe_reports channel enum must be exactly email/webhook")
+
+    block = _openai_tool_block("subscribe_reports").lower()
+    if not block:
+        errors.append("  ✗ local contract: agents/openai.yaml missing subscribe_reports tool block")
+    else:
+        if "wechat" in block:
+            errors.append("  ✗ local contract: agents/openai.yaml must not advertise wechat for subscribe_reports")
+        if "email" not in block or "webhook" not in block:
+            errors.append("  ✗ local contract: agents/openai.yaml must advertise email/webhook for subscribe_reports")
+
+    return errors
+
+
 def main():
     print(f"Comparing {SKILL_JSON}  against  {MCP_URL} ...")
     try:
@@ -316,6 +372,7 @@ def main():
     warnings += r_warnings
 
     errors += check_versions()
+    errors += check_local_contracts()
 
     print(f"\nDocumented tools: {len(doc)} | Server tools: {len(srv)}")
     for w in warnings:
@@ -332,7 +389,7 @@ def main():
         )
         sys.exit(1)
 
-    print("\n✓ No drift — tool schemas, prices, contact info, and versions all consistent.")
+    print("\n✓ No drift — tool schemas, prices, contact info, versions, and local contracts all consistent.")
     if warnings:
         print(f"  ({len(warnings)} non-fatal warning(s) listed above)")
 
