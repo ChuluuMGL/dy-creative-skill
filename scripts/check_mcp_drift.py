@@ -224,9 +224,10 @@ def check_versions():
     if not skill_version:
         return ["  ✗ no 'version' field in skill.json (cannot verify version consistency)"]
 
-    # Plain-text occurrences (frontmatter + badges + tech-specs rows).
+    # Plain-text occurrences (frontmatter + badges + agent metadata).
     text_checks = [
         ("SKILL.md", r"(?m)^version:\s*([^\s]+)\s*$"),
+        ("agents/openai.yaml", r"(?m)^version:\s*([^\s]+)\s*$"),
         ("README.md", r"version-([^\s)-]+)-green"),
         ("README.en.md", r"version-([^\s)-]+)-green"),
     ]

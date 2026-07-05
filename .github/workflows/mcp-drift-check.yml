@@ -4,7 +4,9 @@ name: MCP Drift Check
 # The v0.4.0 -> v0.4.1 fix was exactly this class of bug: docs named a tool the
 # server did not expose, silently breaking a headline feature. This check prevents
 # a recurrence from both directions:
-#   - repo-side:  a PR that edits skill.json is validated against the live server
+#   - repo-side:  a PR that edits skill.json / SKILL.md / READMEs is validated
+#     against the live server (the check now also verifies README prices, contact
+#     info, and version strings, so README-only edits must re-trigger it)
 #   - server-side: the daily cron catches server renames even with no repo activity
 
 on:
@@ -12,12 +14,20 @@ on:
     branches: [ main ]
     paths:
       - 'skill.json'
+      - 'SKILL.md'
+      - 'README.md'
+      - 'README.en.md'
+      - 'agents/openai.yaml'
       - 'scripts/check_mcp_drift.py'
       - '.github/workflows/mcp-drift-check.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'skill.json'
+      - 'SKILL.md'
+      - 'README.md'
+      - 'README.en.md'
+      - 'agents/openai.yaml'
       - 'scripts/check_mcp_drift.py'
   schedule:
     # daily ~03:17 UTC (off the :00 mark); catches server-side drift
