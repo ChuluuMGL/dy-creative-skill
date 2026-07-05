@@ -4,6 +4,12 @@ All notable changes to **dy-creative-skill** are documented here.
 Versions follow the `skill.json` `version` field; the drift-check CI verifies
 the version string is consistent across `SKILL.md`, `skill.json`, and both READMEs.
 
+## [0.4.8] — 2026-07-05
+
+### Brand preview
+- Replaced the old square cartoon-style `social-preview.png` with a 1280×640 GitHub/social preview built around the official DY Creative&Tech logo referenced by the live website.
+- Kept the preview aligned with the public skill surface: logo, brand name, MCP skill positioning, and repository URL are visible at social-card scale.
+
 ## [0.4.7] — 2026-07-05
 
 ### Deployment verification hardening

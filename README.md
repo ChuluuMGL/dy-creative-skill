@@ -8,14 +8,14 @@
 **中文** | [English](README.en.md)
 
 [![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJMNiA1djZsNiAzbTYtOWwtNiAzbTYgM3Y2bC02IDNtMC02TDYgMTciLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-0.4.7-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.8-green)](https://github.com/ChuluuMGL/dy-creative-skill/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/licenses/MIT)
 [![Server Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.dycreative.tech%2Fmcp&label=MCP%20Endpoint)](https://www.dycreative.tech/mcp)
 [![Drift Check](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml/badge.svg)](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)
 
 ---
 
-> 当前稳定版：`v0.4.7`（GitHub Release）。`main` 分支保持为最新已校验代码；每次版本号更新后同步打 tag/release，避免安装页与源码版本脱节。
+> 当前稳定版：`v0.4.8`（GitHub Release）。`main` 分支保持为最新已校验代码；每次版本号更新后同步打 tag/release，避免安装页与源码版本脱节。
 
 ## 关于大瑀创意科技
 
@@ -264,7 +264,7 @@ A：支持所有兼容 MCP（Model Context Protocol）的 AI 平台和 IDE，包
 | 后端 | Express.js（复用官网 API 服务） |
 | 线上进程 | root PM2：`dayu-backend` |
 | 端点 | `POST https://www.dycreative.tech/mcp` |
-| 版本 | 0.4.7 |
+| 版本 | 0.4.8 |
 | 协议版本 | 2025-03-26 |
 | 工具数 | 8（5 查询 + 3 写入） |
 | 契约校验 | [drift-check CI](https://github.com/ChuluuMGL/dy-creative-skill/actions/workflows/mcp-drift-check.yml)（每日校验：工具名/schema enum/annotations + 安全 smoke test + 价格 + 联系方式 + 版本号一致性） |
@@ -340,7 +340,7 @@ MIT — 本仓库内的 Skill 定义文件（SKILL.md / skill.json / 配置示�
     "knowsAbout": ["AI营销", "抖音代运营", "小红书代运营", "AIGC内容生产", "短视频营销", "账号矩阵运营"]
   },
   "programmingModel": "MCP (Model Context Protocol)",
-  "softwareVersion": "0.4.7"
+  "softwareVersion": "0.4.8"
 } -->
 
 <!-- Structured Data for SEO: FAQPage -->
