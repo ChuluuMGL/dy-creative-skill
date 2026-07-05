@@ -9,6 +9,7 @@ the version string is consistent across `SKILL.md`, `skill.json`, and both READM
 ### Deployment verification hardening
 - Removed the temporary non-fatal backend-schema follow-up exemptions from `scripts/check_mcp_drift.py`; `submit_lead.anyOf` and `subscribe_reports.channel.enum` regressions now fail drift-check directly.
 - Documented the real Alibaba Cloud runtime process (`dayu-backend` under root PM2) and the post-deploy verification command sequence in README / CONTRIBUTING.
+- Updated the drift-check workflow to current Node 24-compatible GitHub Actions majors (`actions/checkout@v7`, `actions/setup-python@v6`).
 - Confirmed the deployed MCP server is aligned with the skill contract: no drift, no backend schema warnings, and safe smoke tests pass.
 
 ## [0.4.6] — 2026-07-05
