@@ -71,8 +71,12 @@ EXPECTED_CONTACT = {
     "address_contains": "萧山区农业大厦1座2005室",
 }
 
-# Files whose version string + reference prices must stay consistent.
+# Files checked for contact-info + version consistency.
 README_FILES = ["README.md", "README.en.md"]
+
+# Files that must display the reference price floors (content + AI vision).
+# READMEs are consumer-facing; references/sales-consultation.md also cites them.
+PRICE_FILES = ["README.md", "README.en.md", "references/sales-consultation.md"]
 
 
 def read(path):
@@ -252,11 +256,11 @@ def check_readme_prices():
     for label, expected in [("content", EXPECTED_PRICES), ("vision", EXPECTED_VISION_PRICES)]:
         for plan, val in expected.items():
             formatted = f"¥{val:,}"  # e.g. ¥19,800
-            for path in README_FILES:
+            for path in PRICE_FILES:
                 if formatted not in read(path):
                     errors.append(
-                        f"  ✗ README {label} price drift: {path} missing reference floor '{formatted}' for '{plan}' "
-                        f"(update the README table or the EXPECTED_*_PRICES constant here)"
+                        f"  ✗ {label} price drift: {path} missing reference floor '{formatted}' for '{plan}' "
+                        f"(update the file or the EXPECTED_*_PRICES constant here)"
                     )
     return errors, []
 
