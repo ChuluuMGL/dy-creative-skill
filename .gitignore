@@ -24,3 +24,4 @@ Thumbs.db
 
 # Internal / local-only docs (kept on disk, NOT published — public repo stays public-safe)
 docs/report-subscription-phase2.md
+__pycache__/
