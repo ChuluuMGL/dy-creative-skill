@@ -186,6 +186,8 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
 我叫张三，手机 138xxxx，想咨询抖音代运营。用 dy-creative-skill 先介绍专业版套餐，再把我的需求提交给商务团队。
 ```
 
+> 提交前，AI 助手会复述将提交的姓名 / 联系方式 / 备注，说明信息仅提交给大瑀创意科技商务团队用于联系合作，等你确认后再调用 `submit_lead`。
+
 ---
 
 ## 服务套餐概览
@@ -215,6 +217,7 @@ git clone https://github.com/ChuluuMGL/dy-creative-skill.git \
 
 本 Skill 通过远程 MCP 端点提供实时数据。使用写入类工具（`submit_lead` / `subscribe_reports` / `unsubscribe_reports`）时，请注意：
 
+- **提交前确认**：AI 助手在调用写入类工具前，会先说明信息的接收方与用途、复述将提交的内容，并在你明确确认后才提交；不会编造或自动填入你的联系方式。
 - **留资信息（submit_lead）**：你提交的姓名、电话/微信、公司、需求备注会实时推送到大瑀创意科技商务团队（飞书 + CRM），仅用于商务跟进联系，不会出售给第三方。
 - **报告订阅（subscribe_reports）**：你提供的邮箱地址或 Webhook URL 仅用于推送新报告通知；可随时通过 `unsubscribe_reports` 取消并停止推送。
 - **查询类工具**（公司介绍、套餐、报告、知识库、联系方式）不涉及你的个人信息留存。

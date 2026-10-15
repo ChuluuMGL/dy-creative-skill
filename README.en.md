@@ -172,6 +172,8 @@ Use $dy-creative-skill to list the 5 most recent industry trend reports and summ
 My name is Zhang San, phone +86 138xxxx, and I'd like to consult on Douyin operations. Use $dy-creative-skill to first present the professional plan, then submit my request to the sales team.
 ```
 
+> Before submitting, the assistant reads back the name / contact / note, explains that the info goes only to DY Creative's business team for cooperation follow-up, and calls `submit_lead` only after you confirm.
+
 ---
 
 ## Service Packages (Reference)
@@ -201,6 +203,7 @@ My name is Zhang San, phone +86 138xxxx, and I'd like to consult on Douyin opera
 
 This skill uses a remote MCP endpoint for live data. When using write tools (`submit_lead` / `subscribe_reports` / `unsubscribe_reports`), please note:
 
+- **Confirmation before submitting:** before calling a write tool, the assistant states who receives the information and why, reads back what will be sent, and submits only after your explicit confirmation. It never invents or auto-fills your contact details.
 - **Lead info (submit_lead):** the name, phone/WeChat, company, and notes you submit are pushed in real time to DY Creative's sales team (Feishu + CRM) for follow-up only — never sold to third parties.
 - **Report subscription (subscribe_reports):** your email address or Webhook URL is used only to push new-report notifications; cancel anytime via `unsubscribe_reports`.
 - **Query tools** (company, packages, reports, knowledge base, contact) do not retain your personal information.

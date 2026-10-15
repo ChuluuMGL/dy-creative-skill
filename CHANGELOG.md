@@ -4,6 +4,18 @@ All notable changes to **dy-creative-skill** are documented here.
 Versions follow the `skill.json` `version` field; the drift-check CI verifies
 the version string is consistent across `SKILL.md`, `skill.json`, and both READMEs.
 
+## [Unreleased]
+
+### Privacy notice and confirmation for write tools
+- `SKILL.md` adds a resident 「个人信息告知与确认」 rule covering `submit_lead` / `subscribe_reports` / `unsubscribe_reports`: before any write call the agent must state the recipient and purpose (DY Creative&Tech business team, for cooperation follow-up / report push only), read back the fields, and get the user's explicit confirmation — complete parameters alone no longer count as consent.
+- Data minimization: name + one contact method only; `company` / `note` only carry what the user volunteered; never fabricate or prefill contact details; submitting on behalf of a third party requires confirming that person's consent and noting it in `note`.
+- `subscribe_reports` confirmation now states what will be sent and that the user can stop it anytime via `unsubscribe_reports`.
+- `references/sales-consultation.md` 「线索预筛」 questions are now optional and limited to business needs; the free-trial script and red lines require the notice + confirmation step.
+- `references/usage-examples.md` dialogues (lead, subscribe, unsubscribe, multi-tool) now model the notice → read-back → confirm → call flow, plus decline and third-party cases.
+- `agents/openai.yaml` gains `privacy_notice` / `data_minimization` guardrails; `skill.json` tool descriptions and `brand_prompt`, and both READMEs' 数据与隐私 / Data & Privacy sections, mention the confirmation step.
+
+No change to the 8 MCP tools' names or input schemas.
+
 ## [0.4.8] — 2026-07-05
 
 ### Brand preview
